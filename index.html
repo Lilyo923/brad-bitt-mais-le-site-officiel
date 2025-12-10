@@ -6,15 +6,14 @@
   <title>Brad Bitt — Hub officiel</title>
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
       <div class="brand">
-        <div class="logo">BB</div>
+        <div class="logo" aria-hidden>BB</div>
         <div class="brand-text">
           <div class="title">Brad Bitt</div>
           <div class="subtitle">mais le site</div>
@@ -24,7 +23,8 @@
       <nav class="mini-nav" aria-label="Navigation secondaire">
         <button class="nav-item" data-panel="news">Nouveautés <span class="badge" id="news-badge">1</span></button>
         <button class="nav-item" data-panel="contact">Contact</button>
-        <button class="nav-item external" data-external="https://example-don.com">Don →</button>
+        <button class="nav-item external" data-external="https://example-don.com">Don <span class="don-arrow">↗</span></button>
+        <button id="theme-toggle" class="nav-item" title="Basculer thème">🌓</button>
       </nav>
     </div>
   </header>
@@ -50,18 +50,19 @@
         <h2>Les aventures de Bitt</h2>
         <p>Mini-série d'introduction : épisodes, synopsis et teasers.</p>
         <div class="ep-grid" id="ep-grid">
-          <!-- Episodes cards -->
           <div class="ep-card" tabindex="0" data-episode="1">
             <div class="ep-front"><strong>Épisode 1</strong><span>Prologue</span></div>
-            <div class="ep-back"><p>Résumé court de l'épisode 1.</p><button class="btn small" data-panel="ep1">Voir</button></div>
+            <div class="ep-back"><p>La soirée — Brad se rend à une soirée où tout bascule...</p><button class="btn small" data-panel="ep1">Voir</button></div>
           </div>
+
           <div class="ep-card" tabindex="0" data-episode="2">
-            <div class="ep-front"><strong>Épisode 2</strong><span>Le virage</span></div>
-            <div class="ep-back"><p>Résumé court de l'épisode 2.</p><button class="btn small" data-panel="ep2">Voir</button></div>
+            <div class="ep-front"><strong>Épisode 2</strong><span>Changement de programme</span></div>
+            <div class="ep-back"><p>Brad entre dans une forêt mystérieuse et se retrouve malgré lui au cœur d’un événement étrange.</p><button class="btn small" data-panel="ep2">Voir</button></div>
           </div>
+
           <div class="ep-card" tabindex="0" data-episode="3">
-            <div class="ep-front"><strong>Épisode 3</strong><span>...</span></div>
-            <div class="ep-back"><p>À venir.</p></div>
+            <div class="ep-front"><strong>Épisode 3</strong><span>Retard</span></div>
+            <div class="ep-back"><p>Brad découvre une salle étrange qui le mènera vers autre chose... À venir.</p></div>
           </div>
         </div>
       </article>
