@@ -24,7 +24,9 @@
       <nav class="mini-nav" aria-label="Navigation secondaire">
         <button class="nav-item" data-panel="news" id="btn-news">Nouveautés <span class="badge" id="news-badge">1</span></button>
         <button class="nav-item" data-panel="contact">Contact</button>
-        <button class="nav-item external" data-external="https://example-don.com" id="btn-don">Don <span class="external-arrow" aria-hidden="true">⟶</span></button>
+        <button class="nav-item external" data-external="https://example-don.com" id="btn-don">
+          Don <span class="external-arrow" aria-hidden="true">⟶</span>
+        </button>
 
         <button id="theme-toggle" class="theme-toggle" aria-label="Changer le thème" title="Mode : automatique">
           <!-- SVG icons (minimal) -->
@@ -60,46 +62,63 @@
 
     <section class="content container">
       <article class="card reveal" id="game">
-        <h2>Brad Bitt — Le jeu</h2>
-        <p>Présentation du projet, inspirations et teasers. Aperçu du gameplay, sprites et mécanique.</p>
-        <div class="card-actions">
-          <button class="btn" data-panel="game">Découvrir</button>
+        <div class="card-inner">
+          <div class="card-top">
+            <h2>Brad Bitt — Le jeu</h2>
+            <p>Présentation du projet, inspirations et teasers. Aperçu du gameplay, sprites et mécanique.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn" data-panel="game">Découvrir</button>
+          </div>
         </div>
       </article>
 
       <article class="card reveal" id="episodes">
-        <h2>Les aventures de Bitt</h2>
-        <p>Mini-série d'introduction : épisodes, synopsis et teasers.</p>
-        <div class="ep-grid" id="ep-grid">
-          <!-- Episodes cards -->
-          <div class="ep-card" tabindex="0" data-episode="1">
-            <div class="ep-front"><strong>Épisode 1</strong><span>La soirée</span></div>
-            <div class="ep-back"><p>Brad se rend à une soirée — début du mystère.</p><button class="btn small" data-panel="ep1">Voir</button></div>
+        <div class="card-inner">
+          <div class="card-top">
+            <h2>Les aventures de Bitt</h2>
+            <p>Mini-série d'introduction : épisodes, synopsis et teasers.</p>
           </div>
-          <div class="ep-card" tabindex="0" data-episode="2">
-            <div class="ep-front"><strong>Épisode 2</strong><span>Changement de programme</span></div>
-            <div class="ep-back"><p>Brad entre dans une forêt étrange et disparaît.</p><button class="btn small" data-panel="ep2">Voir</button></div>
-          </div>
-          <div class="ep-card" tabindex="0" data-episode="3">
-            <div class="ep-front"><strong>Épisode 3</strong><span>Retard</span></div>
-            <div class="ep-back"><p>Brad découvre une salle mystérieuse... (à suivre)</p><button class="btn small" data-panel="ep3">Voir</button></div>
+
+          <div class="ep-grid" id="ep-grid" aria-hidden="false">
+            <!-- Episodes cards -->
+            <div class="ep-card" tabindex="0" data-episode="1">
+              <div class="ep-front"><strong>Épisode 1</strong><span>La soirée</span></div>
+              <div class="ep-back"><p>Brad se rend à une soirée — début du mystère.</p><button class="btn small" data-panel="ep1">Voir</button></div>
+            </div>
+            <div class="ep-card" tabindex="0" data-episode="2">
+              <div class="ep-front"><strong>Épisode 2</strong><span>Changement de programme</span></div>
+              <div class="ep-back"><p>Brad entre dans une forêt étrange et disparaît.</p><button class="btn small" data-panel="ep2">Voir</button></div>
+            </div>
+            <div class="ep-card" tabindex="0" data-episode="3">
+              <div class="ep-front"><strong>Épisode 3</strong><span>Retard</span></div>
+              <div class="ep-back"><p>Brad découvre une salle mystérieuse... (à suivre)</p><button class="btn small" data-panel="ep3">Voir</button></div>
+            </div>
           </div>
         </div>
       </article>
 
       <article class="card reveal" id="music">
-        <h2>Musiques</h2>
-        <p>Prochainement : bandes-son & ambiances.</p>
-        <div class="card-actions">
-          <button class="btn disabled" aria-disabled="true">Prochainement</button>
+        <div class="card-inner">
+          <div class="card-top">
+            <h2>Musiques</h2>
+            <p>Prochainement : bandes-son & ambiances.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn disabled" aria-disabled="true">Prochainement</button>
+          </div>
         </div>
       </article>
 
       <article class="card reveal" id="lore">
-        <h2>L'histoire de Bitt</h2>
-        <p>Le lore, la chronologie et les textes explicatifs de l'univers.</p>
-        <div class="card-actions">
-          <button class="btn" data-panel="lore">En savoir plus</button>
+        <div class="card-inner">
+          <div class="card-top">
+            <h2>L'histoire de Bitt</h2>
+            <p>Le lore, la chronologie et les textes explicatifs de l'univers.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn" data-panel="lore">En savoir plus</button>
+          </div>
         </div>
       </article>
     </section>
