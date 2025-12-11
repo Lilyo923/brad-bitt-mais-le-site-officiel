@@ -33,6 +33,7 @@ html,body{height:100%;margin:0;background:
 /* HEADER */
 .site-header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(6,6,8,0.55),rgba(6,6,8,0.25));
   backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03);}
+:root[data-theme="light"] .site-header{ background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0.8)); border-bottom:1px solid rgba(7,16,20,0.04); }
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .brand{display:flex;align-items:center;gap:12px}
 .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));
@@ -49,14 +50,13 @@ html,body{height:100%;margin:0;background:
 .nav-item:hover::after{background:linear-gradient(90deg,var(--accent),var(--accent-2));transform:scaleX(1)}
 .badge{display:inline-block;background:#ff4d6d;color:#fff;border-radius:8px;padding:2px 6px;font-size:11px;margin-left:8px}
 
-/* external small arrow alignment (slightly tilted design) */
-.external-arrow{display:inline-block;margin-left:6px;transform:translateY(-1px);font-weight:700}
+/* external small arrow alignment (tilted to ~130deg) */
+.external-arrow{display:inline-block;margin-left:6px; transform: rotate(130deg) translateY(-1px); display:inline-block; font-weight:700; opacity:0.95;}
 
 /* THEME TOGGLE */
 .theme-toggle{display:inline-flex;align-items:center;gap:8px;padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);cursor:pointer}
 .theme-toggle svg{opacity:0.6}
-:root[data-theme="light"] .site-header{background:linear-gradient(180deg,rgba(255,255,255,0.75),rgba(255,255,255,0.6));}
-:root[data-theme="light"] .theme-toggle{border-color:rgba(7,16,20,0.06)}
+:root[data-theme="light"] .theme-toggle{border-color:rgba(7,16,20,0.06); color:var(--text)}
 
 /* HERO */
 .hero{display:flex;flex-direction:column;align-items:flex-start;gap:18px;padding-top:42px;padding-bottom:42px}
@@ -73,11 +73,18 @@ html,body{height:100%;margin:0;background:
 
 /* CONTENT GRID */
 .content{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;padding-bottom:60px}
-.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); padding:20px;border-radius:var(--radius);
-  box-shadow:0 8px 28px rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.03)}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  padding:12px;border-radius:var(--radius);
+  box-shadow:0 8px 28px rgba(0,0,0,0.45);border:1px solid rgba(255,255,255,0.03);
+  display:flex; flex-direction:column;
+}
+.card-inner{display:flex;flex-direction:column;gap:12px;flex:1}
+.card-top{ /* content block */ }
+.card-actions{ display:flex; gap:8px; margin-top:auto; } /* ensures actions are at bottom */
+
 .card h2{margin:0 0 8px 0;font-size:18px}
 .card p{color:var(--muted);margin:0 0 12px 0}
-.card-actions{display:flex;gap:8px}
 
 /* EP GRID & cards */
 .ep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
@@ -89,10 +96,8 @@ html,body{height:100%;margin:0;background:
 .ep-back{background:linear-gradient(180deg,#111315,#0b0b0f);color:var(--text);transform:rotateY(180deg);text-align:center;font-size:13px;padding:16px}
 .ep-card.flipped{transform:rotateY(180deg)}
 
-/* flip on hover (desktop) */
-@media (hover: hover) and (pointer: fine) {
-  .ep-card:hover{ transform:rotateY(180deg); }
-}
+/* important: remove auto-hover flip (prevents hover bugs). flip only via .flipped class (click/tap) */
+/* previously we had .ep-card:hover transform — removed to avoid bug on some devices */
 
 /* buttons */
 .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:var(--text);cursor:pointer;font-weight:700}
@@ -106,9 +111,21 @@ html,body{height:100%;margin:0;background:
 /* OVERLAY */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:200}
 .overlay.hidden{display:none}
-.overlay-inner{background:linear-gradient(180deg,#0b0b0f,#0f1113);padding:28px;border-radius:12px;max-width:880px;width:92%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.overlay-inner{
+  background:linear-gradient(180deg,#0b0b0f,#0f1113);
+  padding:28px;border-radius:12px;max-width:880px;width:92%;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  color:var(--text);
+}
+:root[data-theme="light"] .overlay-inner{
+  background: linear-gradient(180deg,#ffffff,#f7f8fb);
+  color:var(--text);
+  border:1px solid rgba(7,16,20,0.06);
+}
 .overlay .close{position:absolute;top:12px;right:12px;border:0;background:transparent;color:var(--muted);font-size:20px;cursor:pointer}
 .overlay-content{max-height:70vh;overflow:auto;padding-right:6px}
+
+/* make sure overlay text is readable in light theme */
+:root[data-theme="light"] .overlay-content{ color:var(--text); }
 
 /* reveal animations */
 .reveal{opacity:0;transform:translateY(14px);transition:all .6s cubic-bezier(.2,.9,.2,1)}
