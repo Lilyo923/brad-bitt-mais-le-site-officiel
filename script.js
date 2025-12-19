@@ -5,6 +5,53 @@ document.addEventListener('DOMContentLoaded', () => {
   // helpers
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
+    /* ---------------------------
+     SPA-like main swap (Game page)
+     --------------------------- */
+
+  const main = $('#app-main');
+  const homeHTML = main.innerHTML;
+
+  const GAME_PAGE = `
+    <section class="hero container reveal">
+      <h1>Brad Bitt — Le jeu</h1>
+      <p class="hero-lead">
+        Un projet narratif et interactif, à la frontière entre jeu, série et expérience.
+      </p>
+    </section>
+
+    <section class="content container">
+      <article class="card reveal">
+        <div class="card-inner">
+          <h2>Le concept</h2>
+          <p>
+            Brad Bitt est un jeu narratif centré sur l’ambiance, la progression lente
+            et le mystère. Chaque élément est pensé pour servir l’histoire.
+          </p>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-inner">
+          <h2>Inspirations</h2>
+          <p>
+            Séries indépendantes, récits fragmentés, jeux à narration environnementale
+            et expériences minimalistes.
+          </p>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-inner">
+          <h2>Technologie & IA</h2>
+          <p>
+            Utilisation réfléchie de l’IA pour l’aide à l’écriture, la génération d’idées
+            et certains outils de développement — jamais pour remplacer la vision.
+          </p>
+        </div>
+      </article>
+    </section>
+  `;
 
   const overlay = $('#overlay');
   const overlayInner = $('#overlay-inner');
@@ -63,6 +110,20 @@ document.addEventListener('DOMContentLoaded', () => {
       else openPanel(k);
     });
   });
+    /* Game page override */
+  const discoverBtn = document.querySelector('#game .btn');
+
+  if (discoverBtn) {
+    discoverBtn.addEventListener('click', () => {
+      main.innerHTML = GAME_PAGE;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      document.querySelectorAll('.reveal').forEach(el => {
+        el.classList.remove('visible');
+        io.observe(el);
+      });
+    });
+  }
 
   // oval hero
   $('#oval-learn').addEventListener('click', () => openPanel('welcome'));
@@ -235,7 +296,19 @@ document.addEventListener('DOMContentLoaded', () => {
     markNewsSeen();
     showNewsPanel();
   });
+  /* Logo = retour accueil */
+  const logo = document.querySelector('.brand');
 
+  logo.addEventListener('click', () => {
+    main.innerHTML = homeHTML;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.classList.remove('visible');
+      io.observe(el);
+    });
+  });
+  
   // final: small UX improvement — clicking outside overlay closes handled above
 
 });
