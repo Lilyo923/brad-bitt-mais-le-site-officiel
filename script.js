@@ -5,39 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // helpers
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
-  function bindHomeInteractions() {
-  // data-panel buttons
-  $$('[data-panel]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const k = btn.getAttribute('data-panel');
-      if (k === 'news') { markNewsSeen(); showNewsPanel(); }
-      else openPanel(k);
-    });
-  });
-
-  // ep-card flip
-  $$('.ep-card').forEach(card => {
-    card.addEventListener('click', () => {
-      card.classList.toggle('flipped');
-    });
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        card.classList.toggle('flipped');
-      }
-    });
-  });
-
-  // discover button
-  const discoverBtn = document.querySelector('#btn-discover');
-  if (discoverBtn) {
-    discoverBtn.addEventListener('click', () => {
-      main.innerHTML = GAME_PAGE;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      observeReveals();
-    });
-  }
-}
     /* ---------------------------
      SPA-like main swap (Game page)
      --------------------------- */
@@ -47,9 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const GAME_PAGE = `
     <section class="hero container reveal">
-      <h1>Brad Bitt — Le jeu</h1>
+      <h1>Brad Bitt â€” Le jeu</h1>
       <p class="hero-lead">
-        Un projet narratif et interactif, à la frontière entre jeu, série et expérience.
+        Un projet narratif et interactif, Ã  la frontiÃ¨re entre jeu, sÃ©rie et expÃ©rience.
       </p>
     </section>
 
@@ -58,8 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="card-inner">
           <h2>Le concept</h2>
           <p>
-            Brad Bitt est un jeu narratif centré sur l’ambiance, la progression lente
-            et le mystère. Chaque élément est pensé pour servir l’histoire.
+            Brad Bitt est un jeu narratif centrÃ© sur lâ€™ambiance, la progression lente
+            et le mystÃ¨re. Chaque Ã©lÃ©ment est pensÃ© pour servir lâ€™histoire.
           </p>
         </div>
       </article>
@@ -68,8 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="card-inner">
           <h2>Inspirations</h2>
           <p>
-            Séries indépendantes, récits fragmentés, jeux à narration environnementale
-            et expériences minimalistes.
+            SÃ©ries indÃ©pendantes, rÃ©cits fragmentÃ©s, jeux Ã  narration environnementale
+            et expÃ©riences minimalistes.
           </p>
         </div>
       </article>
@@ -78,8 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="card-inner">
           <h2>Technologie & IA</h2>
           <p>
-            Utilisation réfléchie de l’IA pour l’aide à l’écriture, la génération d’idées
-            et certains outils de développement — jamais pour remplacer la vision.
+            Utilisation rÃ©flÃ©chie de lâ€™IA pour lâ€™aide Ã  lâ€™Ã©criture, la gÃ©nÃ©ration dâ€™idÃ©es
+            et certains outils de dÃ©veloppement â€” jamais pour remplacer la vision.
           </p>
         </div>
       </article>
@@ -108,21 +75,21 @@ document.addEventListener('DOMContentLoaded', () => {
      Panels content map (editable)
      --------------------------- */
   const PANELS = {
-    welcome: `<h2>Bienvenue</h2><p>Ce site centralise tout l'univers Brad Bitt : jeu, épisodes, musiques et lore.</p>`,
-    game: `<h2>Brad Bitt — Le jeu</h2><p>Aperçu du jeu, mécaniques et teasing. (Screens, sprites & notes de dev.)</p>`,
+    welcome: `<h2>Bienvenue</h2><p>Ce site centralise tout l'univers Brad Bitt : jeu, Ã©pisodes, musiques et lore.</p>`,
+    game: `<h2>Brad Bitt â€” Le jeu</h2><p>AperÃ§u du jeu, mÃ©caniques et teasing. (Screens, sprites & notes de dev.)</p>`,
     lore: `<h2>L'histoire de Bitt</h2><p>Le lore complet : origines, chronologie et influences.</p>`,
-    ep1: `<h2>Épisode 1 — La soirée</h2><p>Brad se rend à une soirée — la tension monte sans qu'il s'en doute.</p>`,
-    ep2: `<h2>Épisode 2 — Changement de programme</h2><p>Brad entre dans une forêt étrange et disparaît dans un mystère croissant.</p>`,
-    ep3: `<h2>Épisode 3 — Retard</h2><p>Brad découvre une salle mystérieuse... la suite vous attend.</p>`,
+    ep1: `<h2>Ã‰pisode 1 â€” La soirÃ©e</h2><p>Brad se rend Ã  une soirÃ©e â€” la tension monte sans qu'il s'en doute.</p>`,
+    ep2: `<h2>Ã‰pisode 2 â€” Changement de programme</h2><p>Brad entre dans une forÃªt Ã©trange et disparaÃ®t dans un mystÃ¨re croissant.</p>`,
+    ep3: `<h2>Ã‰pisode 3 â€” Retard</h2><p>Brad dÃ©couvre une salle mystÃ©rieuse... la suite vous attend.</p>`,
     contact: `<h2>Contact</h2><p>Pour un message : contact (at) bradbitt.example</p>`,
-    news: `<h2>Nouveautés</h2><div id="news-content"><p>Optimisation mobile — corrections de transitions menu → jeu.</p></div>`
+    news: `<h2>NouveautÃ©s</h2><div id="news-content"><p>Optimisation mobile â€” corrections de transitions menu â†’ jeu.</p></div>`
   };
 
   /* ---------------------------
      Overlay open / close
      --------------------------- */
   function openPanel(key) {
-    overlayContent.innerHTML = PANELS[key] || `<p>Contenu à venir</p>`;
+    overlayContent.innerHTML = PANELS[key] || `<p>Contenu Ã  venir</p>`;
     overlay.classList.remove('hidden');
     // small delay to ensure focusable
     setTimeout(() => overlayInner.focus(), 50);
@@ -144,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
     /* Game page override */
- const discoverBtn = document.querySelector('#btn-discover');
+  const discoverBtn = document.querySelector('#game .btn');
 
   if (discoverBtn) {
     discoverBtn.addEventListener('click', () => {
@@ -161,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // oval hero
   $('#oval-learn').addEventListener('click', () => openPanel('welcome'));
 
-  // ep-card flip: on mobile toggle .flipped; on desktop hover removed to avoid hover-bug — flip only via class (click)
+  // ep-card flip: on mobile toggle .flipped; on desktop hover removed to avoid hover-bug â€” flip only via class (click)
   $$('.ep-card').forEach(card => {
     card.addEventListener('click', (e) => {
       // toggle flip on tap/click (useful for mobile)
@@ -221,9 +188,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let content = PANELS['news'];
     if (seen) {
       const date = new Date(seen).toLocaleString();
-      content += `<p class="news-date">Dernière visite : ${date}</p>`;
+      content += `<p class="news-date">DerniÃ¨re visite : ${date}</p>`;
     } else {
-      content += `<p class="news-date">Nouvelle mise à jour</p>`;
+      content += `<p class="news-date">Nouvelle mise Ã  jour</p>`;
     }
     overlayContent.innerHTML = content;
     overlay.classList.remove('hidden');
@@ -268,7 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderThemeIcons(pref) {
     themeToggle.dataset.mode = pref;
     // For accessibility: update aria-label
-    themeToggle.setAttribute('aria-label', `Mode thème : ${pref}`);
+    themeToggle.setAttribute('aria-label', `Mode thÃ¨me : ${pref}`);
   }
 
   // init: determine pref
@@ -312,20 +279,14 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* reveal elements that are in view */
-/* reveal observer */
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(en => {
-    if (en.isIntersecting) en.target.classList.add('visible');
-    else en.target.classList.remove('visible');
-  });
-}, { threshold: 0.12 });
-
-function observeReveals() {
-  document.querySelectorAll('.reveal').forEach(el => {
-    el.classList.remove('visible');
-    io.observe(el);
-  });
-}
+  const reveals = $$('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) en.target.classList.add('visible');
+      else en.target.classList.remove('visible');
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => io.observe(r));
 
   /* ensure news badge initial render (in case stored) */
   renderNewsBadge();
@@ -336,20 +297,18 @@ function observeReveals() {
     showNewsPanel();
   });
   /* Logo = retour accueil */
- /* Logo = retour accueil */
-const logo = document.querySelector('.brand');
+  const logo = document.querySelector('.brand');
 
-logo.addEventListener('click', () => {
-  main.innerHTML = homeHTML;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  logo.addEventListener('click', () => {
+    main.innerHTML = homeHTML;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // 🔧 REBRANCHER LES INTERACTIONS PERDUES
-  bindHomeInteractions();
-
-  // 🔧 RELANCER LES ANIMATIONS reveal
-  observeReveals();
-});
-
-  // final: small UX improvement — clicking outside overlay closes handled above
+    document.querySelectorAll('.reveal').forEach(el => {
+      el.classList.remove('visible');
+      io.observe(el);
+    });
+  });
+  
+  // final: small UX improvement â€” clicking outside overlay closes handled above
 
 });
