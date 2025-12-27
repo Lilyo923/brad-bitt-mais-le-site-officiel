@@ -24,9 +24,6 @@
       <nav class="mini-nav" aria-label="Navigation secondaire">
         <button class="nav-item" data-panel="news" id="btn-news">Nouveautés <span class="badge" id="news-badge">1</span></button>
         <button class="nav-item" data-panel="contact">Contact</button>
-        <button class="nav-item external" data-external="https://example-don.com" id="btn-don">
-          Don <span class="external-arrow" aria-hidden="true">⟶</span>
-        </button>
 
         <button id="theme-toggle" class="theme-toggle" aria-label="Changer le thème" title="Mode : automatique">
           <!-- SVG icons (minimal) -->
@@ -68,10 +65,11 @@
             <p>Présentation du projet, inspirations et teasers. Aperçu du gameplay, sprites et mécanique.</p>
           </div>
           <div class="card-actions">
-           <button class="btn" id="btn-discover">Découvrir</button>
-          </div>
-        </div>
-      </article>
+  <button class="btn" id="btn-discover">Découvrir</button>
+  <a class="btn" href="LIEN_CANVA_ICI" target="_blank" rel="noopener">
+    Présentation
+  </a>
+</div>
 
       <article class="card reveal" id="episodes">
         <div class="card-inner">
@@ -117,7 +115,7 @@
             <p>Le lore, la chronologie et les textes explicatifs de l'univers.</p>
           </div>
           <div class="card-actions">
-            <button class="btn" data-panel="lore">En savoir plus</button>
+           <button class="btn disabled" aria-disabled="true">Prochainement</button>
           </div>
         </div>
       </article>
