@@ -252,4 +252,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const initialTheme = localStorage.getItem(THEME_KEY) || 'auto';
   applyTheme(initialTheme);
 
+  /* ---------------------------
+     Restore reveal animations & ep-card interactions
+     --------------------------- */
+  try {
+    const revealEls = $$('.reveal');
+    revealEls.forEach((el, i) => setTimeout(() => el.classList.add('visible'), i * 60));
+  } catch (e) { /* ignore */ }
+
+  // simple flip handler for ep-cards (click/tap)
+  $$('.ep-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+      // avoid toggling when clicking actionable controls inside
+      if (e.target.closest('[data-panel]') || e.target.closest('button') || e.target.closest('a')) return;
+      card.classList.toggle('flipped');
+    });
+  });
+
 });
