@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
     news: `
       <h2>Nouveautés</h2>
       <p>C’est ici que vous trouverez les dernières mises à jour du site.</p>
+      <p><button data-news-dismiss>J'ai lu</button></p>
     `
   };
 
@@ -61,30 +62,69 @@ document.addEventListener('DOMContentLoaded', () => {
   function getFocusable(el) {
     if (!el) return [];
     return Array.from(el.querySelectorAll('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'))
-      .filter(node => node.offsetParent !== null);
+      .filter(node => node.offsetParent !== null && !node.hasAttribute('disabled'));
+  }
+
+  function setMainInert(inert) {
+    if (!main) return;
+    // prefer the inert API when available
+    try {
+      if ('inert' in HTMLElement.prototype) {
+        main.inert = inert;
+      } else {
+        main.setAttribute('aria-hidden', inert ? 'true' : 'false');
+      }
+    } catch (e) {
+      // fallback
+      main.setAttribute('aria-hidden', inert ? 'true' : 'false');
+    }
   }
 
   function openPanel(key) {
     if (!overlay || !overlayContent || !overlayInner) return;
     const html = PANELS[key] || `<p>Contenu à venir</p>`;
     overlayContent.innerHTML = html;
+
     overlay.classList.remove('hidden');
+    overlay.setAttribute('aria-hidden', 'false');
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+
+    setMainInert(true);
+
     lastFocused = document.activeElement;
     document.body.style.overflow = 'hidden';
-    // ensure focus lands inside
+
+    // ensure overlayInner is focusable
+    if (!overlayInner.hasAttribute('tabindex')) overlayInner.setAttribute('tabindex', '-1');
+
+    // ensure focus lands inside: try to focus first interactive element
     setTimeout(() => {
       overlayInner.focus();
       const foc = getFocusable(overlayInner);
       if (foc.length) foc[0].focus();
     }, 50);
+
+    // If we opened the news panel, mark it as seen and hide badge
+    if (key === 'news') {
+      try { localStorage.setItem(NEWS_KEY, new Date().toISOString()); } catch (e) {}
+      if (newsBadge) newsBadge.hidden = true;
+    }
   }
 
   function closePanel() {
     if (!overlay || !overlayInner) return;
     overlay.classList.add('hidden');
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.removeAttribute('role');
+    overlay.removeAttribute('aria-modal');
+
+    setMainInert(false);
+
     document.body.style.overflow = '';
     // restore focus
     if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+    lastFocused = null;
   }
 
   if (overlayClose) overlayClose.addEventListener('click', closePanel);
@@ -94,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Escape closes overlay
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' || e.key === 'Esc') {
       if (overlay && !overlay.classList.contains('hidden')) closePanel();
     }
   });
@@ -104,7 +144,12 @@ document.addEventListener('DOMContentLoaded', () => {
     overlayInner.addEventListener('keydown', (e) => {
       if (e.key !== 'Tab') return;
       const foc = getFocusable(overlayInner);
-      if (!foc.length) return;
+      if (!foc.length) {
+        // no focusable elements: keep focus on overlayInner
+        e.preventDefault();
+        overlayInner.focus();
+        return;
+      }
       const first = foc[0];
       const last = foc[foc.length - 1];
       if (e.shiftKey && document.activeElement === first) {
@@ -117,15 +162,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Handle clicks inside overlay (for dismissing news badge via button in panel)
+  if (overlayContent) {
+    overlayContent.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-news-dismiss]');
+      if (btn) {
+        try { localStorage.setItem(NEWS_KEY, new Date().toISOString()); } catch (err) {}
+        if (newsBadge) newsBadge.hidden = true;
+      }
+    });
+  }
+
   /* Map buttons -> panels */
   $$('[data-panel]').forEach(btn => {
     btn.addEventListener('click', () => {
       const k = btn.getAttribute('data-panel');
-      // if news opened, mark seen
-      if (k === 'news') {
-        try { localStorage.setItem(NEWS_KEY, new Date().toISOString()); } catch (e) {}
-        if (newsBadge) newsBadge.hidden = true;
-      }
+      // open panel (openPanel handles news marking)
       openPanel(k);
     });
   });
@@ -136,26 +188,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (newsBadge) newsBadge.hidden = !!seen;
   } catch (err) { /* ignore */ }
 
-  // support opening panels from ep-cards (buttons inside ep-back)
-  $$('.ep-card [data-panel]').forEach(b => {
-    b.addEventListener('click', (e) => {
-      const k = b.getAttribute('data-panel');
-      openPanel(k);
-    });
-  });
-
-  // allow keyboard "Enter" on ep-card to open first child button
-  $$('.ep-card').forEach(card => {
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        const btn = card.querySelector('[data-panel]');
-        if (btn) {
-          btn.click();
-          e.preventDefault();
-        }
-      }
-    });
-  });
+  // Ep-card click to open panels when .btn small inside ep-card is clicked
+  $$('.ep-card [data-panel]').forEach(b => b.addEventListener('click', (e) => {
+    const k = b.getAttribute('data-panel');
+    openPanel(k);
+  }));
 
   /* ---------------------------
      Theme handling
@@ -164,30 +201,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function applyTheme(mode) {
     // mode: 'auto' | 'light' | 'dark'
-    if (mode === 'light') {
-      document.documentElement.setAttribute('data-theme', 'light');
-    } else if (mode === 'dark') {
-      // dark: remove data-theme so CSS falls back to dark vars
-      document.documentElement.removeAttribute('data-theme');
-    } else {
-      // auto: follow prefers-color-scheme
-      const isLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-      if (isLight) document.documentElement.setAttribute('data-theme', 'light');
-      else document.documentElement.removeAttribute('data-theme');
-    }
     try { localStorage.setItem(THEME_KEY, mode); } catch (e) {}
+
+    // If 'auto', use system preference but still record pref as 'auto'
+    if (mode === 'auto') {
+      const isLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+      document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme-pref', 'auto');
+    } else if (mode === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.documentElement.setAttribute('data-theme-pref', 'light');
+    } else if (mode === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.documentElement.setAttribute('data-theme-pref', 'dark');
+    }
+
     updateThemeToggleTitle(mode);
   }
 
   function updateThemeToggleTitle(mode) {
     if (!themeToggle) return;
-    themeToggle.title = `Mode : ${mode}`;
+    const label = mode === 'auto' ? 'Auto' : (mode === 'light' ? 'Clair' : 'Sombre');
+    themeToggle.title = `Mode : ${label}`;
+    // update aria-pressed for assistive tech (not strictly a toggle button, but helpful)
+    themeToggle.setAttribute('aria-pressed', (mode !== 'auto').toString());
   }
 
   function cycleTheme() {
     const current = localStorage.getItem(THEME_KEY) || 'auto';
     const order = ['auto', 'light', 'dark'];
-    const idx = order.indexOf(current);
+    const idx = Math.max(0, order.indexOf(current));
     const next = order[(idx + 1) % order.length];
     applyTheme(next);
   }
@@ -197,20 +240,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // react to system changes only when in auto
   if (window.matchMedia) {
     const mq = window.matchMedia('(prefers-color-scheme: light)');
-    if (mq.addEventListener) {
-      mq.addEventListener('change', () => {
-        const mode = localStorage.getItem(THEME_KEY) || 'auto';
-        if (mode === 'auto') applyTheme('auto');
-      });
-    } else if (mq.addListener) {
-      mq.addListener(() => {
-        const mode = localStorage.getItem(THEME_KEY) || 'auto';
-        if (mode === 'auto') applyTheme('auto');
-      });
-    }
+    const mqHandler = () => {
+      const mode = localStorage.getItem(THEME_KEY) || 'auto';
+      if (mode === 'auto') applyTheme('auto');
+    };
+    if (mq.addEventListener) mq.addEventListener('change', mqHandler);
+    else if (mq.addListener) mq.addListener(mqHandler);
   }
 
   // init theme from storage
   const initialTheme = localStorage.getItem(THEME_KEY) || 'auto';
   applyTheme(initialTheme);
+
 });
