@@ -7,7 +7,7 @@
 
 /* Light theme overrides (will be toggled with [data-theme="light"] on <html>) */
 :root[data-theme="light"]{
-  background: linear-gradient(180deg,#f7f9fc 0%, #eef2f6 50%);
+  /* DO NOT set a direct background here — only variables */
   --bg: #f6f7fb;
   --card: #ffffff;
   --muted: #58606b;
@@ -26,17 +26,12 @@ html,body{
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
 }
 
-/* When theme light, update background */
-:root[data-theme="light"] body{
-  background: linear-gradient(180deg,#f7f9fc 0%, #eef2f6 50%);
-}
-
 /* Container */
 .container{max-width:var(--maxw);margin:0 auto;padding:32px var(--container-pad);}
 
 /* HEADER */
 .site-header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,rgba(6,6,8,0.55),rgba(6,6,8,0.25));
-  backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03);} 
+  backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03);}
 :root[data-theme="light"] .site-header{ background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,255,255,0.8)); border-bottom:1px solid rgba(7,16,20,0.04); }
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;}
 .brand{display:flex;align-items:center;gap:12px}
@@ -60,9 +55,6 @@ html,body{
 /* THEME TOGGLE */
 .theme-toggle{display:inline-flex;align-items:center;gap:8px;padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);cursor:pointer}
 .theme-toggle svg{opacity:0.6}
-:root[data-theme="light"] body{
-  background: linear-gradient(180deg,#f7f9fc 0%, #eef2f6 50%);
-}
 
 /* HERO */
 .hero{display:flex;flex-direction:column;align-items:flex-start;gap:18px;padding-top:42px;padding-bottom:42px}
@@ -101,9 +93,6 @@ html,body{
 .ep-front span{display:block;font-weight:400;font-size:13px;color:var(--muted)}
 .ep-back{background:linear-gradient(180deg,#111315,#0b0b0f);color:var(--text);transform:rotateY(180deg);text-align:center;font-size:13px;padding:16px}
 .ep-card.flipped{transform:rotateY(180deg)}
-
-/* important: remove auto-hover flip (prevents hover bugs). flip only via .flipped class (click/tap) */
-/* previously we had .ep-card:hover transform â€” removed to avoid bug on some devices */
 
 /* buttons */
 .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:8px;color:var(--text);cursor:pointer;font-weight:700}
