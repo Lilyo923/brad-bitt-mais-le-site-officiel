@@ -14,58 +14,59 @@ document.addEventListener('DOMContentLoaded', () => {
   const ovalLearn = $('#oval-learn');
   const themeToggle = $('#theme-toggle');
   const THEME_KEY = 'brad_theme_pref';
-  // Nouveau comportement du badge : clé simple boolean
+  // NEWS: plus de persistence — le badge disparait uniquement au clic (runtime)
   const NEWS_SEEN_KEY = 'brad_news_seen';
 
-  /* NEWS badge logic (simple + robuste) */
+  /* NEWS badge logic (show on load, hide on click; no persistence) */
   function refreshNewsBadge() {
-    try {
-      if (!newsBadge) return;
-      const seen = localStorage.getItem(NEWS_SEEN_KEY);
-      // Si jamais vu = 'true' -> cacher, sinon afficher (première visite ou réinitialisation)
-      newsBadge.hidden = (seen === 'true');
-    } catch (e) {
-      // si localStorage indisponible, afficher par précaution
-      if (newsBadge) newsBadge.hidden = true;
-    }
+    if (!newsBadge) return;
+    // Forcer l'affichage au chargement (runtime uniquement)
+    newsBadge.hidden = false;
+    newsBadge.style.display = '';
   }
 
   function markNewsRead() {
-    try {
-      localStorage.setItem(NEWS_SEEN_KEY, 'true');
-    } catch (e) { /* ignore */ }
-    if (newsBadge) newsBadge.hidden = true;
+    if (newsBadge) {
+      newsBadge.hidden = true;
+      newsBadge.style.display = 'none';
+    }
   }
 
-  // utilitaire pour réactiver le badge (tests / mise à jour manuelle)
+  // utilitaire runtime pour réactiver le badge
   window.__brad_resetNews = () => {
-    try { localStorage.removeItem(NEWS_SEEN_KEY); } catch (e) {}
-    refreshNewsBadge();
-    console.log('Badge "Nouveautés" réactivé (localStorage supprimé).');
+    if (newsBadge) {
+      newsBadge.hidden = false;
+      newsBadge.style.display = '';
+    }
+    console.log('Badge "Nouveautés" réactivé (runtime).');
   };
 
-  // initialise le badge au chargement
+  // initialize badge
   refreshNewsBadge();
 
-  // click handlers
-  if (newsBtn) {
-    newsBtn.addEventListener('click', () => {
-      markNewsRead();
-      openPanel('news');
-    });
-  }
-  if (newsBadge) {
-    newsBadge.addEventListener('click', (e) => {
-      e.stopPropagation();
-      markNewsRead();
-    });
-  }
+  // --- NEWS history data (modifiable facilement) ---
+  // Chaque entrée : { version, date, teaser, detailHtml }
+  const NEWS_HISTORY = [
+    {
+      version: '1.1',
+      date: '14-02-2026',
+      teaser: 'Cette mise à jour apporte plusieurs améliorations importantes pour rendre l’expérience plus claire, plus moderne et plus agréable à utiliser.',
+      detailHtml: `<p>Amélioration de la rubrique "Nouveautés", avec un affichage plus clair des versions. Correction du badge « 1 », qui disparaît désormais lorsqu’il est consulté. Ajout d’un bouton "Suivi du jeu" dans la section "Brad Bitt, mais le jeu" pour accéder directement au développement du projet. Optimisation générale de l’interface sur ordinateur.</p>`
+    },
+    {
+      version: '1.0',
+      date: '14-01-2026',
+      teaser: 'Lancement initial du site.',
+      detailHtml: `<p>Première version publique contenant la page principale, les cartes Episodes/Musiques/Lore et le lecteur intégré pour les épisodes.</p>`
+    }
+   
+  ];
 
   // Panels content (welcome = en savoir plus)
   const PANELS = {
     welcome: `
       <h2>En savoir plus</h2>
-      <p> Ce site rassemble tout ce qui gravite autour de Brad Bitt : les expériences interactives, les épisodes, les musiques et les éléments de récit qui donnent vie à ce monde.</p>
+      <p>Ce site rassemble tout ce qui gravite autour de Brad Bitt : les expériences interactives, les épisodes, les ambiances sonores et les éléments de récit qui donnent vie à ce monde.</p>
 
       <p>Vous pouvez y découvrir le futur jeu et son univers, suivre les aventures de Brad à travers de courts épisodes, et explorer peu à peu l’histoire qui se dessine en arrière-plan.</p>
 
@@ -83,11 +84,54 @@ document.addEventListener('DOMContentLoaded', () => {
     `
   };
 
+  function buildNewsHtml() {
+    const items = NEWS_HISTORY.map((n, idx) => `
+      <article class="news-card" tabindex="0" data-index="${idx}" aria-expanded="false">
+        <div class="meta">
+          <div class="version">v${n.version}</div>
+          <div class="date">${n.date}</div>
+        </div>
+        <div class="teaser">${n.teaser}</div>
+        <div class="detail">${n.detailHtml}</div>
+      </article>
+    `).join('');
+    return `<h2>Nouveautés</h2><div class="news-list">${items}</div>`;
+  }
+
+  function attachNewsHandlers() {
+    // .news-card toggling (expansion)
+    const cards = Array.from(overlayContent.querySelectorAll('.news-card'));
+    cards.forEach(card => {
+      const idx = card.getAttribute('data-index');
+      card.addEventListener('click', (e) => {
+        // toggle expanded state
+        const expanded = card.classList.toggle('expanded');
+        card.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      });
+      // keyboard accessibility
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const expanded = card.classList.toggle('expanded');
+          card.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        }
+      });
+    });
+  }
+
   /* Overlay open/close + video player injection */
   let lastFocused = null;
   function openPanel(key, options = {}) {
     if (!overlay || !overlayContent || !overlayInner) return;
-    const html = PANELS[key] || (options.html || `<p>Contenu à venir</p>`);
+
+    // If it's the news panel, generate dynamic history markup and attach handlers
+    let html;
+    if (key === 'news') {
+      html = buildNewsHtml();
+    } else {
+      html = (PANELS[key] || (options.html || `<p>Contenu à venir</p>`));
+    }
+
     overlayContent.innerHTML = html;
     overlay.classList.remove('hidden');
     overlay.setAttribute('aria-hidden', 'false');
@@ -95,8 +139,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = 'hidden';
     overlayInner.focus();
 
-    // If opening news panel, mark news as read
+    // If opening news panel, mark news as read (runtime)
     if (key === 'news') markNewsRead();
+
+    // attach news handlers if applicable
+    if (key === 'news') {
+      // wait a tick so styles/layout are applied, then attach handlers
+      requestAnimationFrame(() => attachNewsHandlers());
+    }
   }
   function closePanel() {
     if (!overlay) return;
@@ -235,5 +285,19 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => el.classList.add('visible'), 80 * i);
     });
   })();
+
+  // News button handlers (badge / open panel)
+  if (newsBtn) {
+    newsBtn.addEventListener('click', () => {
+      markNewsRead();
+      openPanel('news');
+    });
+  }
+  if (newsBadge) {
+    newsBadge.addEventListener('click', (e) => {
+      e.stopPropagation();
+      markNewsRead();
+    });
+  }
 
 });
