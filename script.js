@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const THEME_KEY = 'brad_theme_pref';
 
   // ← Incrémente cette valeur à chaque nouvelle MàJ pour réafficher le badge
-  const NEWS_VERSION = '1.2';
+  const NEWS_VERSION = '1.3';
   const NEWS_SEEN_KEY = 'brad_news_seen_v';
 
   /* NEWS badge logic */
@@ -42,6 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- NEWS history data ---
   const NEWS_HISTORY = [
+    {
+      version: '1.3',
+      date: '25-06-2026',
+      teaser: 'Refonte visuelle importante du site et ajout d\'une lettre ouverte de Brad Bitt concernant le jeu.',
+      detailHtml: `<p>Ajout d'une bannière principale style Apple avec la lettre ouverte de Brad Bitt annonçant la suspension temporaire du développement du jeu. Refonte visuelle globale : meilleure hiérarchie typographique, dégradés de texte, effets de survol améliorés sur les cartes, espacement revu. Mise à jour du numéro de version vers 1.3.</p>`
+    },
     {
       version: '1.2',
       date: '21-03-2026',
@@ -70,6 +76,26 @@ document.addEventListener('DOMContentLoaded', () => {
       <p>Vous pouvez y découvrir le futur jeu et son univers, suivre les aventures de Brad à travers de courts épisodes, et explorer peu à peu l'histoire qui se dessine en arrière-plan.</p>
       <p>Certains contenus sont déjà accessibles, d'autres arriveront progressivement. L'idée est simple : offrir un point d'entrée clair pour explorer, comprendre et suivre l'évolution du projet.</p>
       <p>Utilisez les boutons « Découvrir » et « Voir » pour naviguer librement entre les contenus.</p>
+    `,
+    letter: `
+      <div class="letter-panel">
+        <div class="letter-panel-from">Un message de Brad Bitt</div>
+        <div class="letter-body">
+          <p class="letter-salutation">Cher Bradbittien, chère Brad Bittienne,</p>
+          <p>Petite update concernant le projet de jeu Brad Bitt.</p>
+          <p>À l'origine, j'avais pour objectif de le sortir durant l'été. Malheureusement, après avoir longuement réfléchi, j'ai pris la décision de suspendre son développement pour une durée indéterminée.</p>
+          <p>Attention : cela ne signifie absolument pas que le projet est annulé. Bien au contraire. Ce jeu reste l'un de mes plus grands objectifs et j'ai toujours l'intention de lui donner vie un jour.</p>
+          <p>Le problème est simplement une question de temps. Entre les études, les projets personnels et les différentes idées qui occupent mon quotidien, je ne peux pas avancer sur le jeu comme je le souhaiterais.</p>
+          <p>La soundtrack est prête, l'univers est imaginé, l'histoire et le concept général sont déjà bien définis. Là où les choses se compliquent, c'est surtout dans la programmation, la création des niveaux et tout le travail de développement qui se cache derrière un jeu vidéo.</p>
+          <p>Même si cette annonce peut être décevante, je préfère être transparent avec vous plutôt que de faire des promesses que je ne suis pas certain de pouvoir tenir.</p>
+          <p>J'en profite également pour vous dire un immense merci.</p>
+          <p>Vous n'êtes peut-être pas des milliers, mais chacun d'entre vous compte énormément. Chaque visite sur le site, chaque message, chaque encouragement me donne la motivation de continuer à créer et à faire avancer tous ces projets un peu fous.</p>
+          <p>Sans votre soutien, Brad Bitt ne serait probablement qu'une simple idée griffonnée dans un coin de carnet. Aujourd'hui, grâce à vous, cet univers continue d'exister et de grandir.</p>
+          <p>Alors, au nom de toute l'équipe d'IMAGINe Studio… et de Brad Bitt (qui représente à peu près la même personne, let's be honest), merci pour votre patience, votre fidélité et votre soutien.</p>
+          <p class="letter-closing">The adventure isn't over.<br>See you soon.</p>
+          <p class="letter-sig">— BB</p>
+        </div>
+      </div>
     `
   };
 
@@ -141,6 +167,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (ovalLearn) {
     ovalLearn.addEventListener('click', () => openPanel('welcome'));
+  }
+
+  const readLetterBtn = $('#btn-read-letter');
+  if (readLetterBtn) {
+    readLetterBtn.addEventListener('click', () => openPanel('letter'));
   }
 
   /* ep-card flip */
