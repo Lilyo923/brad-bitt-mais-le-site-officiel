@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
       version: '1.3',
       date: '25-06-2026',
       teaser: 'Refonte visuelle importante du site et ajout d\'une lettre ouverte de Brad Bitt concernant le jeu.',
-      detailHtml: `<p>Ajout d'une bannière principale style Apple avec la lettre ouverte de Brad Bitt annonçant la suspension temporaire du développement du jeu. Refonte visuelle globale : meilleure hiérarchie typographique, dégradés de texte, effets de survol améliorés sur les cartes, espacement revu. Mise à jour du numéro de version vers 1.3.</p>`
+      detailHtml: `<p>Corrections de bugs mineurs et amélioration de l'interface.</p>`
     },
     {
       version: '1.2',
