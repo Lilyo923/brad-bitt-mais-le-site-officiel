@@ -1,0 +1,582 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Brad Bitt, mais le jeu — la présentation</title>
+  <meta name="description" content="Brad Bitt, mais le jeu : l'histoire, les déplacements, le combat, les Serra, les niveaux, les Brad Coins, les uniformes et la feuille de route. Sortie visée courant 2027.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="jeu.css">
+
+  <link rel="icon" type="image/svg+xml" href="images/web/favicon.svg">
+  <link rel="icon" type="image/png" sizes="96x96" href="images/web/favicon-96x96.png">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/web/apple-touch-icon.png">
+  <meta name="theme-color" content="#07080c">
+</head>
+<body>
+  <a class="skip-link" href="#hero">Aller au contenu</a>
+
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+  <header class="bar">
+    <div class="wrap bar-inner">
+      <a class="bar-back" href="index.html">
+        <span aria-hidden="true">←</span> Brad&nbsp;Bitt
+      </a>
+      <p class="bar-title" id="bar-title">mais le jeu</p>
+      <div class="bar-right">
+        <span class="bar-pill">Courant 2027</span>
+        <a class="btn btn-mini" href="https://velvety-elf-21fb07.netlify.app" target="_blank" rel="noopener noreferrer">Jouer au prototype</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+  <!-- ============================== HERO ============================== -->
+  <section class="hero" id="hero">
+    <div class="hero-art" aria-hidden="true">
+      <div class="hero-aura"></div>
+      <div class="hero-sky hero-sky-far"></div>
+      <div class="hero-sky hero-sky-near"></div>
+      <div class="hero-floor"></div>
+    </div>
+
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <p class="kicker up">IMAGINe Studio <span aria-hidden="true">×</span> Engine HwR · Prototype 06</p>
+        <h1 class="up">Brad Bitt,<br><span class="grad">mais le jeu.</span></h1>
+        <p class="hero-lead up">Un jeu de plateforme en 2D. Un monde parallèle.
+          Dix niveaux, des Serra à écraser, une monnaie à dépenser
+          et une machine bavarde qui commente chacun de vos achats.</p>
+        <p class="hero-date up"><strong>Sortie visée — courant 2027</strong></p>
+        <div class="hero-cue up" aria-hidden="true"><span></span>Faites défiler</div>
+      </div>
+
+      <div class="hero-figure up" aria-hidden="true">
+        <div class="brad brad-repos brad-xl"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ PROMESSE ============================ -->
+  <section class="statement" id="promesse">
+    <div class="wrap">
+      <p class="big">
+        <span class="up">Brad Bitt n'a pas suivi sa formation à Basic&nbsp;Fit pour rien.</span>
+        <span class="up dim">Il saute, il court, il frappe —<br>et il a une revanche à prendre.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================ HISTOIRE ============================ -->
+  <section class="section" id="histoire">
+    <div class="wrap">
+      <header class="head up">
+        <p class="kicker">L'histoire</p>
+        <h2>Un monde parallèle,<br>et un adversaire à retrouver.</h2>
+      </header>
+    </div>
+
+    <div class="wrap split">
+      <div class="split-media">
+        <div class="frame up">
+          <img src="images/jeu/captures/complexe.png" alt="Capture du jeu : le complexe, niveau −2, avec un Serra-Lanceur sur une plateforme" loading="lazy" width="1920" height="1008">
+          <span class="frame-tag">Complexe — niveau −2</span>
+        </div>
+      </div>
+
+      <ol class="steps">
+        <li class="up">
+          <span class="step-num">01</span>
+          <h3>La poursuite</h3>
+          <p>Brad se met en chasse. Sa piste le conduit dans un monde parallèle —
+            celui où se cache Kirby67.</p>
+        </li>
+        <li class="up">
+          <span class="step-num">02</span>
+          <h3>Dix niveaux</h3>
+          <p>Hors introduction et combat final, dix niveaux séparent Brad de sa cible.
+            Chacun avec sa particularité, son décor et sa musique.</p>
+        </li>
+        <li class="up">
+          <span class="step-num">03</span>
+          <h3>Des objets mystérieux</h3>
+          <p>Tous les trois niveaux, un objet livre un morceau de piste.
+            Réunis, ils donnent les coordonnées exactes de Kirby67.</p>
+        </li>
+        <li class="up">
+          <span class="step-num">04</span>
+          <h3>Le dernier combat</h3>
+          <p>Un affrontement sans pitié, des retournements de situation —
+            et, après les crédits, un teaser pour <em>Brad Bitt, The Last Dance</em>.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- =========================== MOUVEMENT =========================== -->
+  <section class="section alt" id="mouvement">
+    <div class="wrap">
+      <header class="head up">
+        <p class="kicker">Le mouvement</p>
+        <h2>Trois états,<br>douze images.</h2>
+        <p class="lead">Zéro temps mort. Repos, marche, course. Brad reste contrôlable en l'air, avec une inertie plus faible
+          qu'au sol. Le saut se module : plus la touche est maintenue, plus il monte.</p>
+      </header>
+
+      <div class="sprites up">
+        <figure><div class="brad brad-repos"></div><figcaption>Repos<span>4 images · 0,22 s</span></figcaption></figure>
+        <figure><div class="brad brad-marche"></div><figcaption>Marche<span>4 images · 0,13 s</span></figcaption></figure>
+        <figure><div class="brad brad-course"></div><figcaption>Course<span>4 images · 0,09 s</span></figcaption></figure>
+      </div>
+
+      <div class="keys up">
+        <div class="key"><kbd>←</kbd><kbd>→</kbd><span>Se déplacer</span></div>
+        <div class="key"><kbd>Espace</kbd><span>Sauter — maintenir&nbsp;= plus haut</span></div>
+        <div class="key"><kbd>Maj</kbd><span>Courir</span></div>
+        <div class="key"><kbd>X</kbd><span>Frapper</span></div>
+        <div class="key"><kbd>C</kbd><span>Onde de choc</span></div>
+        <div class="key"><kbd>R</kbd><span>Reprendre au début</span></div>
+      </div>
+      <p class="note up">AZERTY et QWERTY sont pris en charge sans configuration.
+        Sur téléphone, les boutons tactiles n'apparaissent que pendant le jeu.</p>
+    </div>
+  </section>
+
+  <!-- ============================= COMBAT ============================= -->
+  <section class="section" id="combat">
+    <div class="wrap">
+      <header class="head up">
+        <p class="kicker">Le combat</p>
+        <h2>Deux façons de frapper.<br>Une seule ressource.</h2>
+      </header>
+
+      <div class="cards-3">
+        <article class="card up">
+          <div class="card-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22">
+              <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 3v10.4M7.6 9.2 12 13.6l4.4-4.4"/>
+              <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 19h14"/>
+            </svg>
+          </div>
+          <h3>Le saut</h3>
+          <p>La méthode classique : retomber sur un ennemi pour l'éliminer.
+            Gratuit, efficace — mais sans effet sur les plus gros.</p>
+        </article>
+        <article class="card up">
+          <div class="card-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22">
+              <path fill="currentColor"
+                    d="M5 11.1a2.3 2.3 0 0 1 2.3-2.3h.5V7.1a1.6 1.6 0 1 1 3.2 0v1.7h.6V6.2a1.6 1.6 0 1 1 3.2 0v2.6h.6V7.6a1.6 1.6 0 1 1 3.2 0v5.7A6.7 6.7 0 0 1 11.9 20h-.6A6.3 6.3 0 0 1 5 13.7z"/>
+              <path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".5"
+                    d="M1.4 11h2.4M2.6 14.6h1.8"/>
+            </svg>
+          </div>
+          <h3>Le corps à corps</h3>
+          <p>Plus de dégâts que le saut, mais il consomme une ressource précieuse.
+            À garder pour les moments qui comptent.</p>
+        </article>
+        <article class="card up accent">
+          <div class="card-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="22" height="22">
+              <path fill="currentColor" d="M11.4 1.8 13 8.1l6.3 1.6-6.3 1.6-1.6 6.3-1.6-6.3L3.5 9.7 9.8 8.1z"/>
+              <path fill="currentColor" opacity=".65" d="M18.4 15.1l.7 2.5 2.5.7-2.5.7-.7 2.5-.7-2.5-2.5-.7 2.5-.7z"/>
+            </svg>
+          </div>
+          <h3>Le Brad-Shy</h3>
+          <p>Une essence mystique qui alimente les compétences de Brad dans le monde parallèle.
+            Elle se recharge toutes les cinq secondes environ — et se remplit aussi
+            en éliminant des Serra.</p>
+        </article>
+      </div>
+
+      <div class="stat-row up">
+        <div class="stat"><strong>10</strong><span>PV au départ</span></div>
+        <div class="stat"><strong>20</strong><span>PV maximum</span></div>
+        <div class="stat"><strong>−1</strong><span>Par coup de boule</span></div>
+        <div class="stat"><strong>3</strong><span>Morts avant de tout refaire</span></div>
+      </div>
+      <p class="note up">La vie ne se régénère pas en plein combat. Il faut casser des caisses,
+        trouver des kits de soins — ou acheter l'amélioration qui change ça.</p>
+    </div>
+  </section>
+
+  <!-- ============================= SERRA ============================== -->
+  <section class="section alt" id="serra">
+    <div class="wrap">
+      <header class="head up">
+        <p class="kicker">Le bestiaire</p>
+        <h2>Les Serra.</h2>
+        <p class="lead">Une seule famille d'ennemis, déclinée. On les rencontre dès le niveau
+          d'introduction, et on ne s'en débarrasse jamais vraiment.</p>
+      </header>
+    </div>
+
+    <div class="roster" id="roster">
+      <article class="mob up">
+        <div class="mob-art"><img src="images/jeu/ennemis/serra.png" alt="Serra" loading="lazy"></div>
+        <h3>Serra</h3>
+        <p class="mob-tag">Le pilier</p>
+        <p>Il patrouille de gauche à droite. S'il repère Brad — même de dos — un point
+          d'exclamation rouge apparaît et il fonce. Un saut suffit à l'écraser.</p>
+      </article>
+
+      <article class="mob up">
+        <div class="mob-art"><img src="images/jeu/ennemis/serra-lourd.png" alt="Serra-Lourd" loading="lazy"></div>
+        <h3>Serra-Lourd</h3>
+        <p class="mob-tag">La marche mobile</p>
+        <p>Trop massif pour être écrasé. Brad se tient debout sur sa tête :
+          l'obstacle devient une plateforme qui se déplace toute seule.</p>
+      </article>
+
+      <article class="mob up">
+        <div class="mob-art float"><img src="images/jeu/ennemis/serra-volant.png" alt="Serra-Volant" loading="lazy"></div>
+        <h3>Serra-Volant</h3>
+        <p class="mob-tag">Le gêneur</p>
+        <p>Il patrouille en plein ciel, tenu par une laisse invisible autour de son point
+          de départ. Revenir sur ses pas, c'est le retrouver là où on l'avait laissé.</p>
+      </article>
+
+      <article class="mob up">
+        <div class="mob-art"><img src="images/jeu/ennemis/serra-lanceur.png" alt="Serra-Lanceur" loading="lazy"></div>
+        <h3>Serra-Lanceur</h3>
+        <p class="mob-tag">Insensible aux coups</p>
+        <p>Perché sur sa corniche, il envoie des boules de serrano et se moque
+          des attaques de Brad. La seule réponse : attraper la boule et la lui renvoyer.</p>
+      </article>
+
+      <article class="mob up">
+        <div class="mob-art"><img src="images/jeu/ennemis/serra-boost.png" alt="Serra-Boost" loading="lazy"></div>
+        <h3>Serra-Boost</h3>
+        <p class="mob-tag">Le coureur</p>
+        <p>Il ne marche pas, il charge — et contrairement aux autres, un trou dans le sol
+          ne l'arrête pas. Le prendre de vitesse ne suffit pas toujours.</p>
+      </article>
+    </div>
+
+    <div class="wrap">
+      <div class="ammo up">
+        <img src="images/jeu/ennemis/boule-serrano.png" alt="Boule de serrano" loading="lazy">
+        <p><strong>La boule de serrano.</strong> Le projectile du Lanceur — et, une fois ramassé,
+          l'arme la plus satisfaisante du jeu.</p>
+      </div>
+      <p class="note up">Les « boss secondaires » reprendront cette même famille : une vague de Serra
+        jusqu'à un exemplaire amélioré, plus résistant, avec des phases inédites entre chaque coup encaissé.
+        D'autres variantes viendront s'ajouter au fil des niveaux.</p>
+    </div>
+  </section>
+
+  <!-- ============================ NIVEAUX ============================= -->
+  <section class="section" id="niveaux">
+    <div class="wrap">
+      <header class="head up">
+        <p class="kicker">Les niveaux</p>
+        <h2>Le décor change.<br>Le niveau, lui, continue.</h2>
+        <p class="lead">Un fondu au noir, un effet sonore, et l'extérieur devient un complexe souterrain :
+          pas de rechargement, pas de nouvelle page. La géométrie reste continue,
+          seule la palette bascule pendant que l'écran est masqué.</p>
+      </header>
+    </div>
+
+    <div class="zone" id="zone">
+      <div class="zone-sticky">
+        <figure class="zone-frame">
+          <img class="zone-img" src="images/jeu/captures/zone-largage.png" alt="Zone de largage : extérieur nocturne, skyline pixelisée" loading="lazy" width="1920" height="1008">
+          <img class="zone-img zone-b" id="zone-b" src="images/jeu/captures/complexe.png" alt="Complexe niveau −2 : intérieur sombre et verdâtre" loading="lazy" width="1920" height="1008">
+          <figcaption class="zone-label"><span id="zone-name">Zone de largage</span></figcaption>
+        </figure>
+      </div>
+      <div class="zone-spacer"></div>
+    </div>
+
+    <div class="wrap">
+      <div class="stat-row up">
+        <div class="stat"><strong>10</strong><span>Niveaux prévus</span></div>
+        <div class="stat"><strong>27</strong><span>Ennemis dans l'intro</span></div>
+        <div class="stat"><strong>256</strong><span>Tuiles jusqu'à la porte</span></div>
+        <div class="stat"><strong>2</strong><span>Zones dans un seul niveau</span></div>
+      </div>
+
+      <h3 class="sub up">Trois façons d'y aller</h3>
+      <div class="cards-3">
+        <article class="card up">
+          <h3>Touriste</h3>
+          <p>Pour profiter de l'histoire sans se battre contre des ennemis trop coriaces.</p>
+        </article>
+        <article class="card up">
+          <h3>Connaisseur</h3>
+          <p>L'équilibre visé : ce que le jeu est censé être.</p>
+        </article>
+        <article class="card up accent">
+          <h3>Salé <span class="chip">+20 % de récompenses</span></h3>
+          <p>Le BRADDY3000 ne vous le recommande pas. Mais si vous insistez.</p>
+        </article>
+      </div>
+      <p class="note up">La difficulté agit sur la vie des ennemis et sur les dégâts subis.</p>
+    </div>
+  </section>
+
+  <!-- =========================== BRAD COINS =========================== -->
+  <section class="section alt" id="coins">
+    <div class="wrap">
+      <header class="head up">
+        <p class="kicker">L'économie</p>
+        <h2>Des Brad Coins,<br>et des Brad Coins secrets.</h2>
+        <p class="lead">Une pièce tourne au-dessus de Brad, un son se déclenche, le compteur s'actualise
+          dans le coin de l'écran puis s'efface. Chaque gain est écrit immédiatement dans la sauvegarde.</p>
+      </header>
+
+      <div class="coins">
+        <div class="coin-line up"><span class="coin-val">+5 BC</span><span class="coin-lab">Niveau terminé</span></div>
+        <div class="coin-line up"><span class="coin-val">+3 BC</span><span class="coin-lab">Mini-jeu terminé</span></div>
+        <div class="coin-line up"><span class="coin-val">+8 BC</span><span class="coin-lab">Boss secondaire — et +1 BC Secret</span></div>
+        <div class="coin-line up secret"><span class="coin-val">1,67 %</span><span class="coin-lab">Chance qu'un ennemi lâche un BC Secret — sans cumul</span></div>
+      </div>
+
+      <p class="note up">Les Brad Coins n'achètent que des compétences. Les uniformes, eux, se débloquent
+        en accomplissant des missions : finir un niveau, battre un nombre d'ennemis, tenir un chrono.
+        Le joueur n'a donc jamais à choisir entre « plus fort » et « plus classe ».</p>
+    </div>
+  </section>
+
+  <!-- =========================== BOUTIQUE ============================= -->
+  <section class="section" id="boutique">
+    <div class="wrap">
+      <header class="head up">
+        <p class="kicker">La boutique</p>
+        <h2>Améliorer Brad.</h2>
+      </header>
+
+      <div class="shop">
+        <div class="shop-col up">
+          <h3>Basiques</h3>
+          <ul class="list">
+            <li><b>Vie</b><span>3 BC → +2 PV, jusqu'à 20</span></li>
+            <li><b>Dégâts</b><span>3 BC → +10 %, jusqu'à +100 %</span></li>
+            <li><b>Résistance</b><span>3 BC → +10 %, jusqu'à +100 %</span></li>
+          </ul>
+        </div>
+        <div class="shop-col up">
+          <h3>Permanentes</h3>
+          <ul class="list">
+            <li><b>Ennemis ralentis</b><span>1 à 2 BC</span></li>
+            <li><b>Meilleur taux de butin</b><span>1 à 2 BC</span></li>
+          </ul>
+        </div>
+        <div class="shop-col up secret-col">
+          <h3>Secrètes <span class="chip">1 BC Secret</span></h3>
+          <ul class="list">
+            <li><b>Frappe chargée</b><span>Maintenir le coup pour frapper beaucoup plus fort</span></li>
+            <li><b>Plaquage</b><span>Frapper en plein saut — plus haut, plus mal</span></li>
+            <li><b>Tourelle anti-serrano</b><span>Tire en continu pendant dix secondes</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="braddy up">
+        <div class="braddy-avatar" aria-hidden="true">B3K</div>
+        <div class="braddy-bubble">
+          <p>« Es-tu sûr de vouloir passer la transaction&nbsp;? »</p>
+          <div class="braddy-choices"><span>Affirmatif</span><span>Tout compte fait, non</span></div>
+        </div>
+      </div>
+      <p class="note up">Le <strong>BRADDY3000</strong>, machine créée par Brad et apparue pour la première fois
+        lors de l'édition <em>Never 2 sans 3</em>, tient le rôle de narrateur et d'assistant.
+        Il commente ce qui se passe à l'écran — et il n'est jamais très tendre avec vos comptes.</p>
+    </div>
+  </section>
+
+  <!-- =========================== UNIFORMES ============================ -->
+  <section class="section alt" id="uniformes">
+    <div class="wrap">
+      <header class="head up">
+        <p class="kicker">La personnalisation</p>
+        <h2>Onze uniformes,<br>déjà dessinés.</h2>
+        <p class="lead">Le costard noir à cravate rouge reste la tenue de départ.
+          Le reste se débloque en jouant : des coloris de cravate pour chaque niveau terminé,
+          des tenues complètes pour les défis — et un uniforme doré tout au bout.</p>
+      </header>
+    </div>
+
+    <p class="wrap scroll-hint up" aria-hidden="true">
+      <span>
+        <svg viewBox="0 0 24 24" width="14" height="14">
+          <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/>
+        </svg>
+      </span> Faites glisser pour voir la suite</p>
+
+    <div class="fits" id="fits">
+      <figure class="fit up"><img src="images/jeu/uniformes/classique.png" alt="Uniforme classique" loading="lazy"><figcaption>Classique</figcaption></figure>
+      <figure class="fit up"><img src="images/jeu/uniformes/classique-bleu.png" alt="Uniforme classique bleu" loading="lazy"><figcaption>Bleu</figcaption></figure>
+      <figure class="fit up"><img src="images/jeu/uniformes/classique-vert.png" alt="Uniforme classique vert" loading="lazy"><figcaption>Vert</figcaption></figure>
+      <figure class="fit up"><img src="images/jeu/uniformes/classique-violet.png" alt="Uniforme classique violet" loading="lazy"><figcaption>Violet</figcaption></figure>
+      <figure class="fit up"><img src="images/jeu/uniformes/classique-orange.png" alt="Uniforme classique orange" loading="lazy"><figcaption>Orange</figcaption></figure>
+      <figure class="fit up"><img src="images/jeu/uniformes/cravate-jaune.png" alt="Uniforme cravate jaune" loading="lazy"><figcaption>Cravate jaune</figcaption></figure>
+      <figure class="fit up"><img src="images/jeu/uniformes/t-shirt.png" alt="Uniforme t-shirt" loading="lazy"><figcaption>T-shirt</figcaption></figure>
+      <figure class="fit up"><img src="images/jeu/uniformes/pecheur.png" alt="Uniforme pêcheur" loading="lazy"><figcaption>Pêcheur</figcaption></figure>
+      <figure class="fit up"><img src="images/jeu/uniformes/funky.png" alt="Uniforme funky" loading="lazy"><figcaption>Funky</figcaption></figure>
+      <figure class="fit up"><img src="images/jeu/uniformes/exclu-beta.png" alt="Uniforme exclusivité bêta" loading="lazy"><figcaption>Exclu bêta</figcaption></figure>
+      <figure class="fit up gold"><img src="images/jeu/uniformes/dore.png" alt="Uniforme doré" loading="lazy"><figcaption>Doré</figcaption></figure>
+    </div>
+
+    <div class="wrap">
+      <p class="note up">Deux familles : les recolorations, qui reprennent la même silhouette,
+        et les tenues à part entière — manches courtes, ciré à capuche, col ouvert —
+        qui demandent chacune leur propre planche d'animation.</p>
+    </div>
+  </section>
+
+  <!-- ============================== HUB =============================== -->
+  <section class="section" id="hub">
+    <div class="wrap">
+      <header class="head up">
+        <p class="kicker">Le hub</p>
+        <h2>Pas un menu.<br>Un endroit où l'on se promène.</h2>
+        <p class="lead">Plutôt que des boutons, une petite carte en 2D dans laquelle on dirige Brad.
+          La boutique est un bâtiment, l'arcade est une borne, les uniformes sont une pièce.
+          On y entre en marchant.</p>
+      </header>
+
+      <div class="cards-3">
+        <article class="card up"><h3>La boutique</h3><p>Trois rayons — basiques, permanentes, secrètes — et le BRADDY3000 derrière le comptoir.</p></article>
+        <article class="card up"><h3>Les bornes d'arcade</h3><p>Des mini-jeux volontairement familiers : un Invader, un Pac-Man. 1 BC tous les 100 points, avec une limite quotidienne pour éviter la ferme à pièces.</p></article>
+        <article class="card up"><h3>Le camp d'entraînement</h3><p>Pour essayer une amélioration avant de la sortir en niveau.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ MUSIQUE ============================= -->
+  <section class="section alt" id="musique">
+    <div class="wrap">
+      <div class="ost">
+        <div class="ost-text up">
+          <p class="kicker">La bande-son</p>
+          <h2>Quatorze pistes,<br>déjà composées.</h2>
+          <p class="lead">Les dix niveaux, le thème du boss, l'intro, le générique de Bitt
+            et même un morceau de Noël. Dans le prototype, la musique passe par un simple
+            élément audio pendant que les effets sont synthétisés à la volée.</p>
+          <ul class="tracks">
+            <li>Niveaux 1 → 10</li><li>Thème du boss</li><li>Intro du niveau 1</li>
+            <li>His name is Bitt</li><li>Événement — Noël</li>
+          </ul>
+        </div>
+        <div class="eq up" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================== PROTOTYPE ============================ -->
+  <section class="section" id="prototype">
+    <div class="wrap">
+      <header class="head up">
+        <p class="kicker">Ce qui se joue déjà</p>
+        <h2>Prototype 06.</h2>
+        <p class="lead">Le niveau d'introduction est un vrai parcours, avec tout ce qui l'entoure :
+          écran d'accueil, animation des studios, menu jouable, musique, sauvegarde et ligne d'arrivée.</p>
+      </header>
+
+      <div class="frame frame-wide up">
+        <img src="images/jeu/captures/titre.png" alt="Écran d'accueil du prototype : le titre Brad Bitt et le bouton Jouer" loading="lazy" width="1920" height="1080">
+        <span class="frame-tag">Écran d'accueil</span>
+      </div>
+
+      <div class="cards-3">
+        <article class="card up"><h3>Un menu vivant</h3><p>Le fond du menu n'est pas une image : Brad y joue tout seul. Des Serra entrent par les côtés, il les écrase, grimpe, puis sort son téléphone quand le calme revient.</p></article>
+        <article class="card up"><h3>Une vraie sauvegarde</h3><p>Brad Coins, PV maximum, difficulté et temps joué sont écrits à la fin de chaque niveau — avec les champs du hub et de la boutique déjà prévus.</p></article>
+        <article class="card up"><h3>Une porte, pas une touche</h3><p>Le niveau se termine par une porte dans laquelle Brad entre en marchant. Rien à deviner : il finit d'y entrer tout seul, puis le bilan s'affiche.</p></article>
+      </div>
+
+      <div class="cta up">
+        <a class="btn btn-primary btn-lg" href="https://velvety-elf-21fb07.netlify.app" target="_blank" rel="noopener noreferrer">Jouer au prototype <span class="ext" aria-hidden="true">↗</span></a>
+        <a class="btn btn-ghost btn-lg" href="https://bradbprog.netlify.app" target="_blank" rel="noopener noreferrer">Suivre le développement <span class="ext" aria-hidden="true">↗</span></a>
+      </div>
+      <p class="note up">Pensé pour être joué sur un maximum d'appareils — ordinateur et téléphone d'abord,
+        avec le support manette envisagé plus tard.</p>
+    </div>
+  </section>
+
+  <!-- =========================== ROADMAP ============================== -->
+  <section class="section alt" id="roadmap">
+    <div class="wrap">
+      <header class="head up">
+        <p class="kicker">La feuille de route</p>
+        <h2>Où en est le jeu.</h2>
+      </header>
+
+      <ol class="road">
+        <li class="up done">
+          <span class="road-dot" aria-hidden="true"></span>
+          <div>
+            <h3>Fait <span class="chip ok">Prototype 06</span></h3>
+            <p>Niveau d'introduction complet, deux zones, 27 ennemis, menu jouable, options,
+              sauvegarde locale et bande-son du niveau.</p>
+          </div>
+        </li>
+        <li class="up doing">
+          <span class="road-dot" aria-hidden="true"></span>
+          <div>
+            <h3>En cours <span class="chip">Les niveaux</span></h3>
+            <p>La construction des dix niveaux : géométrie, placement des Serra,
+              décors qui se dégradent à mesure qu'on approche du boss.</p>
+          </div>
+        </li>
+        <li class="up">
+          <span class="road-dot" aria-hidden="true"></span>
+          <div>
+            <h3>À venir</h3>
+            <p>Le hub, la phase de dialogue d'introduction, la boutique, le BRADDY3000,
+              les uniformes en jeu, les mini-jeux et les Brad Coins secrets.</p>
+          </div>
+        </li>
+        <li class="up final">
+          <span class="road-dot" aria-hidden="true"></span>
+          <div>
+            <h3><span class="grad">Courant 2027</span></h3>
+            <p>La sortie. Pas une promesse en l'air : une date qu'on se donne
+              pour finir le travail correctement.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================== FIN =============================== -->
+  <section class="outro">
+    <div class="wrap outro-inner">
+      <p class="kicker up">Rendez-vous</p>
+      <h2 class="up"><span class="grad">Courant 2027.</span></h2>
+      <p class="up outro-lead">The adventure isn't over.</p>
+      <div class="cta up">
+        <a class="btn btn-primary btn-lg" href="index.html">Retour au site</a>
+        <a class="btn btn-ghost btn-lg" href="https://velvety-elf-21fb07.netlify.app" target="_blank" rel="noopener noreferrer">Jouer au prototype <span class="ext" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot-inner">
+      <div class="foot-logos">
+        <img src="images/jeu/logo-imagine.png" alt="IMAGINe Studio">
+        <img src="images/jeu/logo-hwr.png" alt="Engine HwR">
+      </div>
+      <span class="foot-note">Présentation — contenu susceptible d'évoluer</span>
+    </div>
+  </footer>
+
+  <script src="jeu.js" defer></script>
+</body>
+</html>

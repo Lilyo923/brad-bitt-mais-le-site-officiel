@@ -2,42 +2,47 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>Brad Bitt, mais le site</title>
+  <meta name="description" content="L'univers de Brad Bitt : le jeu, la mini-série, la bande-son et l'histoire. Par IMAGINe Studio & Engine HwR.">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
-  
+
   <!-- Favicon and app icons -->
   <link rel="icon" type="image/svg+xml" href="images/web/favicon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="images/web/favicon-96x96.png">
   <link rel="shortcut icon" href="favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="images/web/apple-touch-icon.png">
   <link rel="manifest" href="images/web/site.webmanifest">
-  <meta name="theme-color" content="#0b0b0f">
+  <meta name="theme-color" content="#08090d">
 </head>
 <body>
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="brand" role="banner">
-        <div class="logo" aria-hidden="true">
-         <img 
-   id="site-logo"
-   src="images/logo bb site clair.png"
-   alt="Logo Brad Bitt">
-        </div>
-      </div>
+  <a class="skip-link" href="#app-main">Aller au contenu</a>
 
-      <nav class="mini-nav" aria-label="Navigation secondaire">
-        <button class="nav-item" data-panel="news" id="btn-news">Nouveautés <span class="badge" id="news-badge">1</span></button>
+  <header class="site-header" role="banner">
+    <div class="container header-inner">
+      <a class="brand" href="#app-main" aria-label="Brad Bitt — accueil">
+        <img id="site-logo" src="images/logo bb site clair.png" alt="Logo Brad Bitt">
+      </a>
+
+      <nav class="mini-nav" aria-label="Navigation principale">
+        <a class="nav-link" href="jeu.html">Le&nbsp;jeu</a>
+        <a class="nav-link" href="#episodes">Épisodes</a>
+        <a class="nav-link" href="#music">Musiques</a>
+
+        <button class="nav-item" data-panel="news" id="btn-news">
+          Nouveautés <span class="badge" id="news-badge" aria-label="nouvelle mise à jour">1</span>
+        </button>
 
         <div class="theme-toggle-wrapper">
           <button id="theme-toggle" class="theme-toggle" aria-label="Changer le thème" title="Mode : automatique">
             <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
               <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
-              <g stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+              <g stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
                 <line x1="12" y1="2" x2="12" y2="4"></line>
                 <line x1="12" y1="20" x2="12" y2="22"></line>
                 <line x1="2" y1="12" x2="4" y2="12"></line>
@@ -48,7 +53,6 @@
                 <line x1="18" y1="6" x2="19.5" y2="4.5"></line>
               </g>
             </svg>
-
             <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
               <path fill="currentColor" d="M21 12.8A9 9 0 0111.2 3 7 7 0 0021 12.8z"></path>
             </svg>
@@ -61,112 +65,179 @@
 
   <main id="app-main">
 
-    <section class="letter-banner reveal">
-      <div class="container letter-banner-inner">
-        <div class="letter-badge">Un message de Brad Bitt</div>
-        <h2 class="letter-headline">Une annonce concernant<br>le jeu.</h2>
-        <p class="letter-excerpt">Cher Bradbittien, chère Brad Bittienne — j'ai une mise à jour importante à partager avec vous concernant le projet de jeu Brad Bitt.</p>
-        <button class="oval-btn oval-letter" id="btn-read-letter">Lire la lettre</button>
+    <!-- ============================ HERO ============================ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-glow"></div>
+        <div class="skyline skyline-far"></div>
+        <div class="skyline skyline-near"></div>
+        <div class="hero-ground"></div>
+        <div class="hero-brad"></div>
+      </div>
+
+      <div class="container hero-inner">
+        <p class="eyebrow reveal">IMAGINe Studio <span aria-hidden="true">×</span> Engine HwR</p>
+        <h1 id="hero-title" class="reveal">L'univers de<br><span class="grad">Brad Bitt.</span></h1>
+        <p class="hero-lead reveal">Un jeu de plateforme en préparation, une mini-série, une bande-son
+          et une histoire qui se dessine en arrière-plan. Tout part d'ici.</p>
+        <div class="hero-actions reveal">
+          <a class="btn btn-primary btn-lg" href="jeu.html">Découvrir le jeu</a>
+          <button class="btn btn-ghost btn-lg" id="oval-learn" aria-controls="overlay" aria-expanded="false">En savoir plus</button>
+        </div>
+        <div class="hero-scroll reveal" aria-hidden="true"><span></span>Faites défiler</div>
       </div>
     </section>
 
-    <section class="hero container reveal">
-      <h1>Bienvenue sur le site</h1>
-      <button class="oval-btn oval-primary large" id="oval-learn" aria-controls="panel-welcome" aria-expanded="false">
-        <span class="label">En savoir plus</span>
-      </button>
+    <!-- ========================= ANNONCE 2027 ========================= -->
+    <section class="announce" id="annonce" aria-labelledby="annonce-title">
+      <div class="container announce-inner reveal">
+        <p class="pill">Un message de Brad Bitt</p>
+        <h2 id="annonce-title">Le jeu n'est pas suspendu.<br>Il est attendu pour <span class="grad">courant 2027</span>.</h2>
+        <p class="announce-lead">La bande-son est écrite, l'univers est dessiné, un prototype se joue déjà.
+          Il reste les niveaux, le hub et la boutique — et ça, ça demande du temps. On se donne rendez-vous en 2027.</p>
+        <div class="announce-actions">
+          <button class="btn btn-accent" id="btn-read-letter">Lire la lettre</button>
+          <a class="btn btn-quiet" href="jeu.html">Voir la présentation</a>
+        </div>
+      </div>
     </section>
 
-    <section class="content container">
-      <article class="card reveal" id="game">
-        <div class="card-inner">
-          <div class="card-top">
-            <h2>Brad Bitt, mais le jeu</h2>
-            <p>Plongez dans l'univers de Bitt.</p>
+    <!-- ============================ LE JEU ============================ -->
+    <section class="section" id="game" aria-labelledby="game-title">
+      <div class="container">
+        <article class="feature reveal">
+          <div class="feature-media">
+            <img src="images/jeu/captures/zone-largage.png" alt="Capture du jeu : Brad Bitt face à deux Serra devant une skyline pixelisée" loading="lazy" width="1920" height="1008">
+            <span class="media-tag">Prototype 06 — niveau d'introduction</span>
           </div>
-          <div class="card-actions">
-            <a class="oval-btn oval-neutral" id="btn-discover" href="https://bbmaislaprésentation.my.canva.site" target="_blank" rel="noopener noreferrer" role="button">Découvrir</a>
-            <a class="oval-btn oval-neutral" id="btn-follow" href="https://bradbprog.netlify.app" target="_blank" rel="noopener noreferrer" role="button">Suivi du jeu</a>
-          </div>
-        </div>
-      </article>
-
-      <article class="card reveal" id="episodes">
-        <div class="card-inner">
-          <div class="card-top">
-            <h2>Les aventures de Bitt</h2>
-            <p>Mini-série : petits épisodes, gros mystère.</p>
-          </div>
-          <div class="ep-grid" id="ep-grid" aria-hidden="false">
-            <div class="ep-card" tabindex="0" data-episode="1" data-video="PQEFBGobdZM">
-              <div class="ep-card-inner">
-                <div class="ep-front"><strong>Épisode 1</strong><span>La soirée</span></div>
-                <div class="ep-back">
-                  <p class="ep-summary">Brad Bitt se rend à une somptueuse soirée ; un incident inattendu bouleverse sa nuit.</p>
-                  <button class="btn btn-visionner" data-video="PQEFBGobdZM">Voir</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="ep-card" tabindex="0" data-episode="2" data-video="AxQZmL8W_i0">
-              <div class="ep-card-inner">
-                <div class="ep-front"><strong>Épisode 2</strong><span>Ligoté</span></div>
-                <div class="ep-back">
-                  <p class="ep-summary">Brad se réveille ligoté, interrogé par des silhouettes masquées — que cherchent-elles ?</p>
-                  <button class="btn btn-visionner" data-video="AxQZmL8W_i0">Voir</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="ep-card" tabindex="0" data-episode="3" data-video="4YfBA-63uqw">
-              <div class="ep-card-inner">
-                <div class="ep-front"><strong>Épisode 3</strong><span>Retard</span></div>
-                <div class="ep-back">
-                  <p class="ep-summary">Après une chute étrange, Brad découvre un lieu abandonné et une porte menaçante.</p>
-                  <button class="btn btn-visionner" data-video="4YfBA-63uqw">Voir</button>
-                </div>
-              </div>
+          <div class="feature-body">
+            <p class="eyebrow">Le jeu</p>
+            <h2 id="game-title">Brad Bitt,<br>mais le jeu</h2>
+            <p>Dix niveaux, un monde parallèle, des Serra à écraser et une machine bavarde
+              qui commente vos achats. Voici tout ce que l'on peut déjà en dire.</p>
+            <ul class="facts">
+              <li><strong>2027</strong><span>Sortie visée</span></li>
+              <li><strong>10</strong><span>Niveaux prévus</span></li>
+              <li><strong>01</strong><span>Prototype jouable</span></li>
+            </ul>
+            <div class="feature-actions">
+              <a class="btn btn-primary" href="jeu.html">Découvrir</a>
+              <a class="btn btn-quiet" href="https://bradbprog.netlify.app" target="_blank" rel="noopener noreferrer">Suivi du jeu <span class="ext" aria-hidden="true">↗</span></a>
             </div>
           </div>
-        </div>
-      </article>
+        </article>
+      </div>
+    </section>
 
-      <article class="card reveal" id="music">
-        <div class="card-inner">
-          <div class="card-top">
-            <h2>Musiques</h2>
-            <p>Plongez dans l'ambiance musicale du jeu.</p>
-          </div>
-          <div class="card-actions">
-            <button class="btn disabled" aria-disabled="true">Prochainement</button>
-          </div>
-        </div>
-      </article>
+    <!-- ========================== ÉPISODES ========================== -->
+    <section class="section" id="episodes" aria-labelledby="ep-title">
+      <div class="container">
+        <header class="section-head reveal">
+          <p class="eyebrow">La mini-série</p>
+          <h2 id="ep-title">Les aventures de Bitt</h2>
+          <p class="section-lead">Petits épisodes, gros mystère. Cliquez une carte pour lire le résumé.</p>
+        </header>
 
-      <article class="card reveal" id="lore">
-        <div class="card-inner">
-          <div class="card-top">
-            <h2>L'histoire de Bitt</h2>
-            <p>Découvrez l'histoire cachée de Bitt.</p>
+        <div class="ep-grid" id="ep-grid">
+          <div class="ep-card reveal" tabindex="0" role="button" aria-pressed="false" data-episode="1" data-video="PQEFBGobdZM">
+            <div class="ep-card-inner">
+              <div class="ep-front">
+                <img src="https://i.ytimg.com/vi/PQEFBGobdZM/hqdefault.jpg" alt="" loading="lazy" aria-hidden="true">
+                <div class="ep-front-text">
+                  <span class="ep-num">Épisode 1</span>
+                  <strong>La soirée</strong>
+                </div>
+              </div>
+              <div class="ep-back">
+                <p class="ep-summary">Brad Bitt se rend à une somptueuse soirée ; un incident inattendu bouleverse sa nuit.</p>
+                <button class="btn btn-small btn-visionner" data-video="PQEFBGobdZM">Voir l'épisode</button>
+              </div>
+            </div>
           </div>
-          <div class="card-actions">
-           <button class="btn disabled" aria-disabled="true">Prochainement</button>
+
+          <div class="ep-card reveal" tabindex="0" role="button" aria-pressed="false" data-episode="2" data-video="AxQZmL8W_i0">
+            <div class="ep-card-inner">
+              <div class="ep-front">
+                <img src="https://i.ytimg.com/vi/AxQZmL8W_i0/hqdefault.jpg" alt="" loading="lazy" aria-hidden="true">
+                <div class="ep-front-text">
+                  <span class="ep-num">Épisode 2</span>
+                  <strong>Ligoté</strong>
+                </div>
+              </div>
+              <div class="ep-back">
+                <p class="ep-summary">Brad se réveille ligoté, interrogé par des silhouettes masquées — que cherchent-elles ?</p>
+                <button class="btn btn-small btn-visionner" data-video="AxQZmL8W_i0">Voir l'épisode</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="ep-card reveal" tabindex="0" role="button" aria-pressed="false" data-episode="3" data-video="4YfBA-63uqw">
+            <div class="ep-card-inner">
+              <div class="ep-front">
+                <img src="https://i.ytimg.com/vi/4YfBA-63uqw/hqdefault.jpg" alt="" loading="lazy" aria-hidden="true">
+                <div class="ep-front-text">
+                  <span class="ep-num">Épisode 3</span>
+                  <strong>Retard</strong>
+                </div>
+              </div>
+              <div class="ep-back">
+                <p class="ep-summary">Après une chute étrange, Brad découvre un lieu abandonné et une porte menaçante.</p>
+                <button class="btn btn-small btn-visionner" data-video="4YfBA-63uqw">Voir l'épisode</button>
+              </div>
+            </div>
           </div>
         </div>
-      </article>
+      </div>
+    </section>
+
+    <!-- ====================== MUSIQUES + LORE ====================== -->
+    <section class="section section-duo">
+      <div class="container duo">
+        <article class="card soon reveal" id="music">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M12 3v10.55A4 4 0 1014 17V7h4V3z"/></svg>
+          </div>
+          <h2>Musiques</h2>
+          <p>Quatorze pistes sont déjà composées : les niveaux, le thème du boss,
+            l'intro et même un morceau de Noël. L'écoute arrive plus tard.</p>
+          <span class="tag-soon">Prochainement</span>
+        </article>
+
+        <article class="card soon reveal" id="lore">
+          <div class="card-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26"><path fill="currentColor" d="M6 2h9l5 5v15H6zm8 1.5V8h4.5z"/></svg>
+          </div>
+          <h2>L'histoire de Bitt</h2>
+          <p>Un monde parallèle, une machine bavarde, un adversaire nommé Kirby67.
+            Les morceaux du récit seront publiés au fur et à mesure.</p>
+          <span class="tag-soon">Prochainement</span>
+        </article>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-      <div class="left">Version 1.3</div>
-      <div class="right">IMAGINe Studio &amp; Engine HwR</div>
+      <div class="footer-brand">
+        <strong>Brad Bitt</strong>
+        <span>IMAGINe Studio &amp; Engine HwR</span>
+      </div>
+      <nav class="footer-links" aria-label="Liens de pied de page">
+        <a href="jeu.html">Le jeu</a>
+        <a href="#episodes">Épisodes</a>
+        <a href="https://bradbprog.netlify.app" target="_blank" rel="noopener noreferrer">Suivi du jeu</a>
+      </nav>
+      <div class="footer-version">Version 1.4</div>
     </div>
   </footer>
 
-  <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true">
+  <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-hidden="true">
     <div class="overlay-inner" id="overlay-inner" tabindex="-1" role="document">
-      <button class="close" id="overlay-close" aria-label="Fermer">✕</button>
+      <button class="close" id="overlay-close" aria-label="Fermer">
+        <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+          <path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
       <div id="overlay-content" class="overlay-content" tabindex="0"></div>
     </div>
   </div>

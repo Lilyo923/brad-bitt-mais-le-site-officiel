@@ -1,47 +1,64 @@
-// script.js — gestion badge / thèmes / overlays / ep-cards / lecteur vidéo
+/* =============================================================================
+   BRAD BITT, MAIS LE SITE — script v2
+   Thèmes · badge nouveautés · modale (nouveautés, lettre, lecteur) ·
+   cartes épisodes · apparitions au défilement.
+   ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
-  const $ = sel => document.querySelector(sel);
+  const $  = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
 
-  const overlay = $('#overlay');
-  const overlayInner = $('#overlay-inner');
+  const overlay        = $('#overlay');
+  const overlayInner   = $('#overlay-inner');
   const overlayContent = $('#overlay-content');
-  const overlayClose = $('#overlay-close');
+  const overlayClose   = $('#overlay-close');
 
-  const newsBtn = $('#btn-news');
+  const newsBtn   = $('#btn-news');
   const newsBadge = $('#news-badge');
 
-  const ovalLearn = $('#oval-learn');
+  const ovalLearn   = $('#oval-learn');
   const themeToggle = $('#theme-toggle');
+
   const THEME_KEY = 'brad_theme_pref';
 
   // ← Incrémente cette valeur à chaque nouvelle MàJ pour réafficher le badge
-  const NEWS_VERSION = '1.3';
+  const NEWS_VERSION  = '1.4';
   const NEWS_SEEN_KEY = 'brad_news_seen_v';
 
-  /* NEWS badge logic */
+  const moinsDAnimation = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ----------------------------------------------------------------------
+     Badge « nouveautés »
+     ------------------------------------------------------------------- */
   function refreshNewsBadge() {
     if (!newsBadge) return;
-    const seen = localStorage.getItem(NEWS_SEEN_KEY);
-    if (seen === NEWS_VERSION) {
-      newsBadge.hidden = true;
-    } else {
-      newsBadge.hidden = false;
-    }
+    let seen = null;
+    try { seen = localStorage.getItem(NEWS_SEEN_KEY); } catch (e) {}
+    newsBadge.hidden = (seen === NEWS_VERSION);
   }
 
   function markNewsRead() {
-    if (newsBadge) {
-      newsBadge.hidden = true;
-      localStorage.setItem(NEWS_SEEN_KEY, NEWS_VERSION);
-    }
+    if (!newsBadge) return;
+    newsBadge.hidden = true;
+    try { localStorage.setItem(NEWS_SEEN_KEY, NEWS_VERSION); } catch (e) {}
   }
 
-  // initialize badge
   refreshNewsBadge();
 
-  // --- NEWS history data ---
+  /* ----------------------------------------------------------------------
+     Historique des versions
+     ------------------------------------------------------------------- */
   const NEWS_HISTORY = [
+    {
+      version: '1.4',
+      date: '24-08-2026',
+      teaser: 'Refonte visuelle complète du site, nouvelle présentation du jeu à faire défiler, et une date : courant 2027.',
+      detailHtml: `<p>Le développement du jeu n'est plus suspendu : la sortie est désormais visée pour courant 2027.
+        La lettre a été réécrite en conséquence.</p>
+        <p>Le site a été entièrement redessiné — nouvelle page d'accueil, nouvelle typographie, nouveaux thèmes clair et sombre,
+        cartes d'épisodes avec vignettes. Le lien Canva a été remplacé par une véritable page de présentation du jeu,
+        qui se découvre en faisant défiler : histoire, déplacements, combat, ennemis, niveaux, Brad Coins,
+        uniformes, bande-son et feuille de route.</p>`
+    },
     {
       version: '1.3',
       date: '25-06-2026',
@@ -68,31 +85,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  // Panels content
+  /* ----------------------------------------------------------------------
+     Contenu des panneaux
+     ------------------------------------------------------------------- */
   const PANELS = {
     welcome: `
       <h2>En savoir plus</h2>
-      <p>Ce site rassemble tout ce qui gravite autour de Brad Bitt : les expériences interactives, les épisodes, les ambiances sonores et les éléments de récit qui donnent vie à ce monde.</p>
-      <p>Vous pouvez y découvrir le futur jeu et son univers, suivre les aventures de Brad à travers de courts épisodes, et explorer peu à peu l'histoire qui se dessine en arrière-plan.</p>
-      <p>Certains contenus sont déjà accessibles, d'autres arriveront progressivement. L'idée est simple : offrir un point d'entrée clair pour explorer, comprendre et suivre l'évolution du projet.</p>
-      <p>Utilisez les boutons « Découvrir » et « Voir » pour naviguer librement entre les contenus.</p>
+      <p>Ce site rassemble tout ce qui gravite autour de Brad Bitt : le jeu en préparation,
+        les épisodes de la mini-série, les ambiances sonores et les éléments de récit qui donnent vie à ce monde.</p>
+      <p>La page <strong>« Le jeu »</strong> raconte en détail ce qui est prévu : l'histoire, les déplacements,
+        le système de combat, les Serra, les niveaux, les Brad Coins, les uniformes et la feuille de route.
+        Elle se découvre simplement en faisant défiler.</p>
+      <p>Certains contenus sont déjà accessibles, d'autres arriveront progressivement.
+        L'idée est simple : offrir un point d'entrée clair pour explorer, comprendre et suivre l'évolution du projet.</p>
     `,
     letter: `
       <div class="letter-panel">
         <div class="letter-panel-from">Un message de Brad Bitt</div>
         <div class="letter-body">
           <p class="letter-salutation">Cher Bradbittien, chère Brad Bittienne,</p>
-          <p>Petite update concernant le projet de jeu Brad Bitt.</p>
-          <p>À l'origine, j'avais pour objectif de le sortir durant l'été. Malheureusement, après avoir longuement réfléchi, j'ai pris la décision de suspendre son développement pour une durée indéterminée.</p>
-          <p>Attention : cela ne signifie absolument pas que le projet est annulé. Bien au contraire. Ce jeu reste l'un de mes plus grands objectifs et j'ai toujours l'intention de lui donner vie un jour.</p>
-          <p>Le problème est simplement une question de temps. Entre les études, les projets personnels et les différentes idées qui occupent mon quotidien, je ne peux pas avancer sur le jeu comme je le souhaiterais.</p>
-          <p>La soundtrack est prête, l'univers est imaginé, l'histoire et le concept général sont déjà bien définis. Là où les choses se compliquent, c'est surtout dans la programmation, la création des niveaux et tout le travail de développement qui se cache derrière un jeu vidéo.</p>
-          <p>Même si cette annonce peut être décevante, je préfère être transparent avec vous plutôt que de faire des promesses que je ne suis pas certain de pouvoir tenir.</p>
-          <p>J'en profite également pour vous dire un immense merci.</p>
-          <p>Vous n'êtes peut-être pas des milliers, mais chacun d'entre vous compte énormément. Chaque visite sur le site, chaque message, chaque encouragement me donne la motivation de continuer à créer et à faire avancer tous ces projets un peu fous.</p>
-          <p>Sans votre soutien, Brad Bitt ne serait probablement qu'une simple idée griffonnée dans un coin de carnet. Aujourd'hui, grâce à vous, cet univers continue d'exister et de grandir.</p>
-          <p>Alors, au nom de toute l'équipe d'IMAGINe Studio… et de Brad Bitt (qui représente à peu près la même personne, let's be honest), merci pour votre patience, votre fidélité et votre soutien.</p>
-          <p class="letter-closing">The adventure isn't over.<br>See you soon.</p>
+
+          <p>Il y a quelques mois, je vous annonçais que le développement du jeu Brad Bitt était
+            suspendu pour une durée indéterminée. Cette phrase n'a plus lieu d'être.</p>
+
+          <p class="letter-strong">Le jeu n'est pas suspendu. Il est reporté :
+            la sortie est désormais visée pour courant 2027.</p>
+
+          <p>Ce n'est pas un renoncement, c'est un calendrier. Entre les études, les projets personnels
+            et les idées qui occupent mon quotidien, je ne peux pas avancer au rythme d'un studio.
+            Alors plutôt que de promettre une date que je ne tiendrai pas, je prends le temps qu'il faut
+            et je vous donne rendez-vous en 2027.</p>
+
+          <p>Et pendant ce temps, ça avance. La bande-son est écrite. L'univers est dessiné :
+            Brad, les Serra, les uniformes. L'histoire et le concept général sont posés.
+            Un prototype se joue déjà — un vrai niveau d'introduction, avec son menu, sa musique,
+            sa sauvegarde et ses ennemis.</p>
+
+          <p>Ce qui prend du temps, c'est le reste : la programmation, la construction des dix niveaux,
+            le hub, la boutique, les mini-jeux. C'est le travail invisible qui se cache derrière un jeu vidéo,
+            et c'est celui qui demande le plus de patience — la vôtre comme la mienne.</p>
+
+          <p>J'en profite pour vous dire un immense merci. Vous n'êtes peut-être pas des milliers,
+            mais chacun d'entre vous compte énormément. Chaque visite sur le site, chaque message,
+            chaque encouragement me donne la motivation de continuer.</p>
+
+          <p>Sans votre soutien, Brad Bitt ne serait probablement qu'une simple idée griffonnée
+            dans un coin de carnet. Aujourd'hui, grâce à vous, cet univers continue d'exister et de grandir.</p>
+
+          <p>Alors, au nom de toute l'équipe d'IMAGINe Studio… et de Brad Bitt
+            (qui représente à peu près la même personne, let's be honest), merci pour votre patience,
+            votre fidélité et votre soutien.</p>
+
+          <p class="letter-closing">The adventure isn't over.<br>See you in 2027.</p>
           <p class="letter-sig">— BB</p>
         </div>
       </div>
@@ -101,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function buildNewsHtml() {
     const items = NEWS_HISTORY.map((n, idx) => `
-      <article class="news-card" tabindex="0" data-index="${idx}" aria-expanded="false">
+      <article class="news-card" tabindex="0" role="button" data-index="${idx}" aria-expanded="false">
         <div class="meta">
           <div class="version">v${n.version}</div>
           <div class="date">${n.date}</div>
@@ -114,41 +158,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function attachNewsHandlers() {
-    const cards = Array.from(overlayContent.querySelectorAll('.news-card'));
-    cards.forEach(card => {
-      card.addEventListener('click', () => {
-        const expanded = card.classList.toggle('expanded');
-        card.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      });
-      card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          const expanded = card.classList.toggle('expanded');
-          card.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-        }
+    overlayContent.querySelectorAll('.news-card').forEach(card => {
+      const basculer = () => {
+        const ouvert = card.classList.toggle('expanded');
+        card.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
+      };
+      card.addEventListener('click', basculer);
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); basculer(); }
       });
     });
   }
 
-  /* Overlay open/close */
+  /* ----------------------------------------------------------------------
+     Modale
+     ------------------------------------------------------------------- */
   let lastFocused = null;
+
   function openPanel(key, options = {}) {
     if (!overlay || !overlayContent || !overlayInner) return;
-    let html;
-    if (key === 'news') {
-      html = buildNewsHtml();
-    } else {
-      html = (PANELS[key] || (options.html || `<p>Contenu à venir</p>`));
-    }
+    const html = key === 'news'
+      ? buildNewsHtml()
+      : (PANELS[key] || options.html || '<p>Contenu à venir</p>');
+
     overlayContent.innerHTML = html;
     overlay.classList.remove('hidden');
     overlay.setAttribute('aria-hidden', 'false');
     lastFocused = document.activeElement;
     document.body.style.overflow = 'hidden';
     overlayInner.focus();
+
     if (key === 'news') {
       markNewsRead();
-      requestAnimationFrame(() => attachNewsHandlers());
+      requestAnimationFrame(attachNewsHandlers);
     }
   }
 
@@ -157,163 +199,197 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.classList.add('hidden');
     overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
+    if (overlayContent) overlayContent.innerHTML = '';   // coupe la vidéo en cours
     if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
-    if (overlayContent) overlayContent.innerHTML = '';
   }
 
   if (overlayClose) overlayClose.addEventListener('click', closePanel);
-  if (overlay) overlay.addEventListener('click', (e) => { if (e.target === overlay) closePanel(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay && !overlay.classList.contains('hidden')) closePanel(); });
+  if (overlay) overlay.addEventListener('click', e => { if (e.target === overlay) closePanel(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay && !overlay.classList.contains('hidden')) closePanel();
+  });
 
-  if (ovalLearn) {
-    ovalLearn.addEventListener('click', () => openPanel('welcome'));
-  }
+  if (ovalLearn) ovalLearn.addEventListener('click', () => openPanel('welcome'));
 
   const readLetterBtn = $('#btn-read-letter');
-  if (readLetterBtn) {
-    readLetterBtn.addEventListener('click', () => openPanel('letter'));
-  }
+  if (readLetterBtn) readLetterBtn.addEventListener('click', () => openPanel('letter'));
 
-  /* ep-card flip */
-  $$('.ep-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      if (e.target.closest('button') || e.target.closest('a')) return;
-      card.classList.toggle('flipped');
-    });
-    card.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        card.classList.toggle('flipped');
-        e.preventDefault();
-      }
-    });
+  if (newsBtn) newsBtn.addEventListener('click', () => { markNewsRead(); openPanel('news'); });
+  if (newsBadge) newsBadge.addEventListener('click', e => {
+    e.stopPropagation(); e.preventDefault();
+    markNewsRead(); openPanel('news');
   });
 
-  // Visionner button
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('.btn-visionner');
-    if (!btn) return;
-    const videoId = btn.getAttribute('data-video') || btn.closest('.ep-card')?.getAttribute('data-video');
-    if (!videoId) {
-      openPanel(null, { html: '<p>Vidéo indisponible.</p>' });
-      return;
-    }
-    const playerHtml = `
+  /* ----------------------------------------------------------------------
+     Cartes épisodes
+
+     Le bouton « Voir l'épisode » est écouté directement, pas par délégation :
+     il peut ainsi arrêter la propagation du clic, et la carte ne se retourne
+     plus dans son dos. La carte, elle, ne réagit qu'aux touches qui lui sont
+     réellement adressées — sinon Entrée sur le bouton déclenchait les deux.
+     ------------------------------------------------------------------- */
+  function ouvrirVideo(videoId) {
+    if (!videoId) { openPanel(null, { html: '<p>Vidéo indisponible.</p>' }); return; }
+    openPanel(null, { html: `
       <h2>Lecture</h2>
       <div class="video-wrap">
-        <iframe src="https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1" 
-                title="Vidéo" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+        <iframe src="https://www.youtube.com/embed/${videoId}?rel=0&autoplay=1"
+                title="Épisode des aventures de Bitt"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
       </div>
-      <p style="margin-top:12px;color:var(--muted)">Fermez la fenêtre pour revenir au site.</p>
-    `;
-    openPanel(null, { html: playerHtml });
+      <p style="margin-top:14px">Fermez la fenêtre pour revenir au site.</p>
+    ` });
+  }
+
+  $$('.ep-card').forEach(card => {
+    const retourner = () => {
+      const ouvert = card.classList.toggle('flipped');
+      card.setAttribute('aria-pressed', ouvert ? 'true' : 'false');
+    };
+
+    card.addEventListener('click', e => {
+      if (e.target.closest('.btn-visionner') || e.target.closest('a')) return;
+      retourner();
+    });
+
+    card.addEventListener('keydown', e => {
+      if (e.target !== card) return;
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); retourner(); }
+    });
+
+    card.querySelectorAll('.btn-visionner').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.preventDefault();
+        e.stopPropagation();
+        ouvrirVideo(btn.getAttribute('data-video') || card.getAttribute('data-video'));
+      });
+      // Entrée et Espace déclenchent déjà le clic du bouton : on empêche
+      // seulement la touche de remonter jusqu'à la carte.
+      btn.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') e.stopPropagation();
+      });
+    });
   });
 
-  /* Theme */
+  /* ----------------------------------------------------------------------
+     Thème
+     ------------------------------------------------------------------- */
   const logoImg = document.getElementById('site-logo');
 
   function updateLogoForTheme(pref) {
     if (!logoImg) return;
-    if (pref === 'light') {
-      logoImg.src = 'images/logo bb site clair.png';
-    } else if (pref === 'dark') {
-      logoImg.src = 'images/logo bb site sombre.png';
-    } else {
+    let clair;
+    if (pref === 'light') clair = true;
+    else if (pref === 'dark') clair = false;
+    else {
       const mm = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)');
-      const isLight = mm ? mm.matches : true;
-      logoImg.src = isLight
-        ? 'images/logo bb site clair.png'
-        : 'images/logo bb site sombre.png';
+      clair = mm ? mm.matches : true;
     }
+    logoImg.src = clair ? 'images/logo bb site clair.png' : 'images/logo bb site sombre.png';
   }
 
   function applyTheme(pref = 'auto', save = false) {
     try {
       const root = document.documentElement;
-      if (pref === 'light') {
-        root.setAttribute('data-theme', 'light');
-      } else if (pref === 'dark') {
-        root.removeAttribute('data-theme');
-      } else {
+      let clair;
+      if (pref === 'light') clair = true;
+      else if (pref === 'dark') clair = false;
+      else {
         const mm = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)');
-        const isLight = mm ? mm.matches : true;
-        if (isLight) root.setAttribute('data-theme', 'light');
-        else root.removeAttribute('data-theme');
+        clair = mm ? mm.matches : true;
       }
+      if (clair) root.setAttribute('data-theme', 'light');
+      else root.removeAttribute('data-theme');
+
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', clair ? '#f5f6fa' : '#08090d');
+
       if (themeToggle) {
-        themeToggle.classList.remove('is-light','is-dark');
+        themeToggle.classList.remove('is-light', 'is-dark');
         if (pref === 'light') themeToggle.classList.add('is-light');
         else if (pref === 'dark') themeToggle.classList.add('is-dark');
-        const title = pref === 'auto' ? 'Mode : automatique' : (pref === 'light' ? 'Mode : clair' : 'Mode : sombre');
+
+        const title = pref === 'auto' ? 'Mode : automatique'
+                    : pref === 'light' ? 'Mode : clair' : 'Mode : sombre';
         themeToggle.setAttribute('title', title);
         themeToggle.setAttribute('aria-label', title);
+
         const modeLabel = document.getElementById('theme-mode-label');
         if (modeLabel) {
           if (pref === 'auto') {
             modeLabel.textContent = 'auto';
-            modeLabel.offsetHeight;
+            void modeLabel.offsetHeight;
             modeLabel.classList.add('visible');
           } else {
             modeLabel.classList.remove('visible');
           }
         }
       }
+
       updateLogoForTheme(pref);
-      if (save) {
-        try { localStorage.setItem(THEME_KEY, pref); } catch(e) {}
-      }
+      if (save) { try { localStorage.setItem(THEME_KEY, pref); } catch (e) {} }
     } catch (e) {}
   }
 
-  try {
-    const saved = localStorage.getItem(THEME_KEY) || 'auto';
-    applyTheme(saved, false);
-  } catch(e){ applyTheme('auto', false); }
+  let prefCourante = 'auto';
+  try { prefCourante = localStorage.getItem(THEME_KEY) || 'auto'; } catch (e) {}
+  applyTheme(prefCourante, false);
 
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
-      const current = localStorage.getItem(THEME_KEY) || 'auto';
-      const order = ['auto','light','dark'];
-      const next = order[(order.indexOf(current) + 1) % order.length];
-      applyTheme(next, true);
+      const ordre = ['auto', 'light', 'dark'];
+      prefCourante = ordre[(ordre.indexOf(prefCourante) + 1) % ordre.length];
+      applyTheme(prefCourante, true);
     });
   }
 
-  /* Reveal on load */
-  (function revealOnLoad() {
-    const reveals = $$('.reveal');
-    if (!reveals.length) return;
-    reveals.forEach((el, i) => {
-      setTimeout(() => el.classList.add('visible'), 80 * i);
+  // Si l'utilisateur est en « auto », suivre les changements du système.
+  const mmSysteme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)');
+  if (mmSysteme && mmSysteme.addEventListener) {
+    mmSysteme.addEventListener('change', () => { if (prefCourante === 'auto') applyTheme('auto', false); });
+  }
+
+  /* ----------------------------------------------------------------------
+     Apparitions au défilement
+     ------------------------------------------------------------------- */
+  (function reveals() {
+    const cibles = $$('.reveal');
+    if (!cibles.length) return;
+
+    if (moinsDAnimation || !('IntersectionObserver' in window)) {
+      cibles.forEach(el => el.classList.add('visible'));
+      return;
+    }
+
+    // Décalage progressif entre voisins d'un même conteneur.
+    const compteurs = new Map();
+    cibles.forEach(el => {
+      const parent = el.parentElement;
+      const n = compteurs.get(parent) || 0;
+      el.style.setProperty('--i', String(Math.min(n, 5)));
+      compteurs.set(parent, n + 1);
     });
+
+    const obs = new IntersectionObserver((entrees) => {
+      entrees.forEach(entree => {
+        if (!entree.isIntersecting) return;
+        entree.target.classList.add('visible');
+        obs.unobserve(entree.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    cibles.forEach(el => obs.observe(el));
   })();
 
-  /* Auto-flip first episode card */
-  (function autoFlipFirstCard() {
-    const firstCard = document.querySelector('.ep-card');
-    if (!firstCard) return;
-    setTimeout(() => {
-      firstCard.classList.add('flipped');
-      setTimeout(() => {
-        firstCard.classList.remove('flipped');
-      }, 600);
-    }, 500);
+  /* ----------------------------------------------------------------------
+     En-tête : trait de séparation dès que la page défile
+     ------------------------------------------------------------------- */
+  (function headerStuck() {
+    const header = $('.site-header');
+    if (!header) return;
+    const maj = () => header.classList.toggle('is-stuck', window.scrollY > 8);
+    maj();
+    addEventListener('scroll', maj, { passive: true });
   })();
-
-  /* News button */
-  if (newsBtn) {
-    newsBtn.addEventListener('click', () => {
-      markNewsRead();
-      openPanel('news');
-    });
-  }
-  if (newsBadge) {
-    newsBadge.addEventListener('click', (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-      markNewsRead();
-      openPanel('news');
-    });
-  }
-
 });
