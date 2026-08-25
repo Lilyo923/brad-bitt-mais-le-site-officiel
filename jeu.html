@@ -154,7 +154,7 @@
     <div class="wrap">
       <header class="head up">
         <p class="kicker">Le combat</p>
-        <h2>Deux façons de frapper.<br>Une seule ressource.</h2>
+        <h2>Deux façons de frapper.<br>Une jauge à remplir.</h2>
       </header>
 
       <div class="cards-3">
@@ -168,7 +168,8 @@
           </div>
           <h3>Le saut</h3>
           <p>La méthode classique : retomber sur un ennemi pour l'éliminer.
-            Gratuit, efficace — mais sans effet sur les plus gros.</p>
+            Rien à dépenser, rien à viser — mais le Lourd et le Lanceur, eux,
+            ne s'écrasent pas.</p>
         </article>
         <article class="card up">
           <div class="card-ico" aria-hidden="true">
@@ -180,8 +181,9 @@
             </svg>
           </div>
           <h3>Le corps à corps</h3>
-          <p>Plus de dégâts que le saut, mais il consomme une ressource précieuse.
-            À garder pour les moments qui comptent.</p>
+          <p>Plus de dégâts que le saut, et tout aussi gratuit : rien ne se consomme,
+            seul un court délai de recharge sépare deux coups. Il faut juste
+            accepter de s'approcher.</p>
         </article>
         <article class="card up accent">
           <div class="card-ico" aria-hidden="true">
@@ -191,9 +193,10 @@
             </svg>
           </div>
           <h3>Le Brad-Shy</h3>
-          <p>Une essence mystique qui alimente les compétences de Brad dans le monde parallèle.
-            Elle se recharge toutes les cinq secondes environ — et se remplit aussi
-            en éliminant des Serra.</p>
+          <p>Une jauge d'ultime, pas une réserve à dépenser au coup par coup.
+            Elle ne monte qu'en éliminant des Serra, et les plus coriaces en donnent
+            le plus. Une fois pleine, elle libère une onde de choc qui frappe tout
+            autour de Brad — puis retombe à zéro.</p>
         </article>
       </div>
 
@@ -334,13 +337,15 @@
       </header>
 
       <div class="coins">
+        <div class="coin-line up"><span class="coin-val">+2 BC</span><span class="coin-lab">Serra éliminé</span></div>
         <div class="coin-line up"><span class="coin-val">+5 BC</span><span class="coin-lab">Niveau terminé</span></div>
         <div class="coin-line up"><span class="coin-val">+3 BC</span><span class="coin-lab">Mini-jeu terminé</span></div>
         <div class="coin-line up"><span class="coin-val">+8 BC</span><span class="coin-lab">Boss secondaire — et +1 BC Secret</span></div>
         <div class="coin-line up secret"><span class="coin-val">1,67 %</span><span class="coin-lab">Chance qu'un ennemi lâche un BC Secret — sans cumul</span></div>
       </div>
 
-      <p class="note up">Les Brad Coins n'achètent que des compétences. Les uniformes, eux, se débloquent
+      <p class="note up">De quoi donner l'échelle : les 27 Serra du niveau d'introduction rapportent
+        54 BC, soit une amélioration et des poussières. Les Brad Coins n'achètent que des compétences. Les uniformes, eux, se débloquent
         en accomplissant des missions : finir un niveau, battre un nombre d'ennemis, tenir un chrono.
         Le joueur n'a donc jamais à choisir entre « plus fort » et « plus classe ».</p>
     </div>
@@ -358,17 +363,22 @@
         <div class="shop-col up">
           <h3>Basiques</h3>
           <ul class="list">
-            <li><b>Vie</b><span>3 BC → +2 PV, jusqu'à 20</span></li>
-            <li><b>Dégâts</b><span>3 BC → +10 %, jusqu'à +100 %</span></li>
-            <li><b>Résistance</b><span>3 BC → +10 %, jusqu'à +100 %</span></li>
+            <li><b>Vie</b><span>30 BC → +2 PV, jusqu'à 20</span></li>
+            <li><b>Dégâts</b><span>30 BC → +10 %, jusqu'à +100 %</span></li>
+            <li><b>Résistance</b><span>30 BC → +10 %, jusqu'à +100 %</span></li>
           </ul>
+          <p class="col-note">Et ça grimpe : chaque amélioration achetée renchérit
+            la suivante de 5 BC.</p>
         </div>
         <div class="shop-col up">
           <h3>Permanentes</h3>
           <ul class="list">
-            <li><b>Ennemis ralentis</b><span>1 à 2 BC</span></li>
-            <li><b>Meilleur taux de butin</b><span>1 à 2 BC</span></li>
+            <li><b>Ennemis ralentis</b><span>10 BC → les Serra se déplacent moins vite</span></li>
+            <li><b>Butin renforcé</b><span>20 BC → les Serra lâchent davantage de Brad Coins en mourant</span></li>
           </ul>
+          <p class="col-note">Un seul achat, un effet acquis pour le reste de la partie —
+            là où les basiques se rachètent palier après palier. C'est ce qui justifie
+            qu'elles coûtent plus que deux ou trois Serra.</p>
         </div>
         <div class="shop-col up secret-col">
           <h3>Secrètes <span class="chip">1 BC Secret</span></h3>
@@ -419,7 +429,7 @@
       <figure class="fit up"><img src="images/jeu/uniformes/classique-vert.png" alt="Uniforme classique vert" loading="lazy"><figcaption>Vert</figcaption></figure>
       <figure class="fit up"><img src="images/jeu/uniformes/classique-violet.png" alt="Uniforme classique violet" loading="lazy"><figcaption>Violet</figcaption></figure>
       <figure class="fit up"><img src="images/jeu/uniformes/classique-orange.png" alt="Uniforme classique orange" loading="lazy"><figcaption>Orange</figcaption></figure>
-      <figure class="fit up"><img src="images/jeu/uniformes/cravate-jaune.png" alt="Uniforme cravate jaune" loading="lazy"><figcaption>Cravate jaune</figcaption></figure>
+      <figure class="fit up"><img src="images/jeu/uniformes/cravate-jaune.png" alt="Uniforme cravate jaune" loading="lazy"><figcaption>Jaune</figcaption></figure>
       <figure class="fit up"><img src="images/jeu/uniformes/t-shirt.png" alt="Uniforme t-shirt" loading="lazy"><figcaption>T-shirt</figcaption></figure>
       <figure class="fit up"><img src="images/jeu/uniformes/pecheur.png" alt="Uniforme pêcheur" loading="lazy"><figcaption>Pêcheur</figcaption></figure>
       <figure class="fit up"><img src="images/jeu/uniformes/funky.png" alt="Uniforme funky" loading="lazy"><figcaption>Funky</figcaption></figure>
@@ -447,7 +457,7 @@
 
       <div class="cards-3">
         <article class="card up"><h3>La boutique</h3><p>Trois rayons — basiques, permanentes, secrètes — et le BRADDY3000 derrière le comptoir.</p></article>
-        <article class="card up"><h3>Les bornes d'arcade</h3><p>Des mini-jeux volontairement familiers : un Invader, un Pac-Man. 1 BC tous les 100 points, avec une limite quotidienne pour éviter la ferme à pièces.</p></article>
+        <article class="card up"><h3>Les bornes d'arcade</h3><p>Des mini-jeux volontairement familiers — un Invader, un Pac-Man — mais remixés à la sauce Brad Bitt. 1 BC tous les 100 points, avec une limite quotidienne pour éviter la ferme à pièces.</p></article>
         <article class="card up"><h3>Le camp d'entraînement</h3><p>Pour essayer une amélioration avant de la sortir en niveau.</p></article>
       </div>
     </div>
@@ -488,8 +498,8 @@
       </header>
 
       <div class="frame frame-wide up">
-        <img src="images/jeu/captures/titre.png" alt="Écran d'accueil du prototype : le titre Brad Bitt et le bouton Jouer" loading="lazy" width="1920" height="1080">
-        <span class="frame-tag">Écran d'accueil</span>
+        <img src="images/jeu/captures/menu.png" alt="Le menu du prototype : Brad, seul, saute sur une plateforme pendant qu'un Serra court en contrebas" loading="lazy" width="1920" height="1080">
+        <span class="frame-tag">Menu principal — Brad y joue tout seul</span>
       </div>
 
       <div class="cards-3">

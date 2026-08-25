@@ -25,6 +25,23 @@
   Cette version s'appelle **prototype 06** : les mentions « Prototype 05 » ont suivi.
   Vérifié dans le code en ligne — mêmes deux zones, même palette, porte toujours à la
   tuile 256, toujours 27 ennemis : les captures et les chiffres de la page restent justes.
+* **Le combat, revu sur pièces.** Le corps à corps ne consomme rien — vérifié dans
+  `js/acteurs.js` du prototype en ligne, qui le dit noir sur blanc : « Gratuite et
+  illimitée : seul le délai de recharge la borne. Le Brad-Shy n'est PAS consommé ici,
+  c'est une jauge d'ultime. » Le Brad-Shy ne monte donc qu'en éliminant des Serra,
+  et une fois plein il libère l'onde de choc puis retombe à zéro. Les trois fiches
+  et le titre de la section ont été réécrits en conséquence.
+* **Les prix de la boutique.** Les améliorations basiques passent de 3 à **30 BC**,
+  avec **+5 BC** sur chaque achat suivant. La section Brad Coins gagne la ligne
+  qui manquait — **+2 BC par Serra éliminé** — et l'échelle qui va avec :
+  les 27 Serra du niveau d'introduction rapportent 54 BC. Les permanentes suivent :
+  **10 BC** pour « Ennemis ralentis », **20 BC** pour « Butin renforcé » — rebaptisé,
+  parce que « meilleur taux de butin » ne disait pas assez qu'il s'agit de ce que
+  lâchent les Serra en mourant. Chaque ligne porte maintenant son effet en clair,
+  et la colonne précise qu'un bonus permanent s'achète une fois pour toute la partie.
+* **La capture du prototype** montre maintenant le menu, avec Brad qui joue tout seul
+  et un Serra qui court en contrebas : c'est ce dont parle la fiche juste en dessous.
+  `captures/titre.png` n'était plus utilisée, elle a été retirée.
 * **Plus d'emoji.** Les trois pictogrammes de la section « combat » — le saut, le
   corps à corps, le Brad-Shy — sont des SVG dessinés, qui suivent la couleur du thème.
 
