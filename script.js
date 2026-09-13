@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const THEME_KEY = 'brad_theme_pref';
 
   // ← Incrémente cette valeur à chaque nouvelle MàJ pour réafficher le badge
-  const NEWS_VERSION  = '1.4';
+  const NEWS_VERSION  = '1.5.1';
   const NEWS_SEEN_KEY = 'brad_news_seen_v';
 
   const moinsDAnimation = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -48,6 +48,19 @@ document.addEventListener('DOMContentLoaded', () => {
      Historique des versions
      ------------------------------------------------------------------- */
   const NEWS_HISTORY = [
+    {
+      version: '1.5.1',
+      date: '13-09-2026',
+      teaser: 'Le jeu a ses dates — bêta du 27 au 29 novembre 2026, sortie le 9 janvier 2027 — et le site se dote d\'une politique d\'utilisation et de confidentialité.',
+      detailHtml: `<p>« Brad Bitt, mais le jeu » quitte le « courant 2027 » pour deux dates fermes :
+        une <strong>bêta ouverte du 27 au 29 novembre 2026</strong>, puis la
+        <strong>sortie officielle le 9 janvier 2027</strong>. Le site a été mis à jour partout
+        où la date apparaissait, page de présentation comprise.</p>
+        <p>Cette mise à jour apporte également une politique d'utilisation et de confidentialité,
+        disponible en <a href="#confidentialite">cliquant ici</a> : qui édite le site, ce qu'il
+        enregistre, ce qu'il envoie ailleurs, et comment il a été écrit. Le tout pour une meilleure
+        transparence du site en lui-même.</p>`
+    },
     {
       version: '1.4',
       date: '24-08-2026',
@@ -108,13 +121,15 @@ document.addEventListener('DOMContentLoaded', () => {
           <p>Il y a quelques mois, je vous annonçais que le développement du jeu Brad Bitt était
             suspendu pour une durée indéterminée. Cette phrase n'a plus lieu d'être.</p>
 
-          <p class="letter-strong">Le jeu n'est pas suspendu. Il est reporté :
-            la sortie est désormais visée pour courant 2027.</p>
+          <p class="letter-strong">Le jeu n'est pas suspendu, et il n'est plus attendu « courant 2027 » :
+            la bêta ouvre du 27 au 29 novembre 2026, et la sortie officielle est fixée
+            au 9 janvier 2027.</p>
 
           <p>Ce n'est pas un renoncement, c'est un calendrier. Entre les études, les projets personnels
             et les idées qui occupent mon quotidien, je ne peux pas avancer au rythme d'un studio.
-            Alors plutôt que de promettre une date que je ne tiendrai pas, je prends le temps qu'il faut
-            et je vous donne rendez-vous en 2027.</p>
+            Alors plutôt que de promettre une date que je ne tiendrai pas, j'ai pris le temps qu'il fallait —
+            et maintenant que le travail a suffisamment avancé, je peux enfin écrire ces deux dates
+            noir sur blanc.</p>
 
           <p>Et pendant ce temps, ça avance. La bande-son est écrite. L'univers est dessiné :
             Brad, les Serra, les uniformes. L'histoire et le concept général sont posés.
@@ -136,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
             (qui représente à peu près la même personne, let's be honest), merci pour votre patience,
             votre fidélité et votre soutien.</p>
 
-          <p class="letter-closing">The adventure isn't over.<br>See you in 2027.</p>
+          <p class="letter-closing">The adventure isn't over.<br>See you on January 9th.</p>
           <p class="letter-sig">— BB</p>
         </div>
       </div>
@@ -163,9 +178,36 @@ document.addEventListener('DOMContentLoaded', () => {
         const ouvert = card.classList.toggle('expanded');
         card.setAttribute('aria-expanded', ouvert ? 'true' : 'false');
       };
-      card.addEventListener('click', basculer);
+      card.addEventListener('click', e => {
+        // Un lien dans le texte ne doit pas replier la carte au passage.
+        if (e.target.closest('a')) return;
+        basculer();
+      });
       card.addEventListener('keydown', e => {
+        if (e.target !== card) return;
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); basculer(); }
+      });
+    });
+    attacherAncres();
+  }
+
+  /* Un lien « #quelque-chose » écrit dans la modale doit d'abord la fermer,
+     sinon on défile vers une section cachée derrière le voile. */
+  function attacherAncres() {
+    overlayContent.querySelectorAll('a[href^="#"]').forEach(lien => {
+      lien.addEventListener('click', e => {
+        e.preventDefault();
+        const cible = document.querySelector(lien.getAttribute('href'));
+        closePanel();
+        if (!cible) return;
+        // Un bloc replié s'ouvre pour que l'on arrive sur du contenu lisible.
+        if (cible.tagName === 'DETAILS') cible.open = true;
+        requestAnimationFrame(() => {
+          cible.scrollIntoView({ behavior: moinsDAnimation ? 'auto' : 'smooth', block: 'start' });
+          const titre = cible.querySelector('h2, h3') || cible;
+          titre.setAttribute('tabindex', '-1');
+          titre.focus({ preventScroll: true });
+        });
       });
     });
   }
@@ -191,6 +233,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (key === 'news') {
       markNewsRead();
       requestAnimationFrame(attachNewsHandlers);
+    } else {
+      requestAnimationFrame(attacherAncres);
     }
   }
 
