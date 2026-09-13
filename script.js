@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const THEME_KEY = 'brad_theme_pref';
 
   // ← Incrémente cette valeur à chaque nouvelle MàJ pour réafficher le badge
-  const NEWS_VERSION  = '1.5.1';
+  const NEWS_VERSION  = '1.4.1';
   const NEWS_SEEN_KEY = 'brad_news_seen_v';
 
   const moinsDAnimation = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -49,17 +49,17 @@ document.addEventListener('DOMContentLoaded', () => {
      ------------------------------------------------------------------- */
   const NEWS_HISTORY = [
     {
-      version: '1.5.1',
+      version: '1.4.1',
       date: '13-09-2026',
-      teaser: 'Le jeu a ses dates — bêta du 27 au 29 novembre 2026, sortie le 9 janvier 2027 — et le site se dote d\'une politique d\'utilisation et de confidentialité.',
-      detailHtml: `<p>« Brad Bitt, mais le jeu » quitte le « courant 2027 » pour deux dates fermes :
-        une <strong>bêta ouverte du 27 au 29 novembre 2026</strong>, puis la
-        <strong>sortie officielle le 9 janvier 2027</strong>. Le site a été mis à jour partout
-        où la date apparaissait, page de présentation comprise.</p>
-        <p>Cette mise à jour apporte également une politique d'utilisation et de confidentialité,
-        disponible en <a href="#confidentialite">cliquant ici</a> : qui édite le site, ce qu'il
-        enregistre, ce qu'il envoie ailleurs, et comment il a été écrit. Le tout pour une meilleure
-        transparence du site en lui-même.</p>`
+      teaser: 'Le jeu a enfin ses dates — une bêta fin novembre, la sortie début janvier — et le site s\'explique sur ce qu\'il fait de vos données.',
+      detailHtml: `<p>« Brad Bitt, mais le jeu » ne sortira plus « courant 2027 ».
+        La bêta ouvre du <strong>27 au 29 novembre 2026</strong>, avec les trois premiers niveaux,
+        et la sortie officielle est fixée au <strong>9 janvier 2027</strong>.
+        Les deux dates ont été reportées partout sur le site.</p>
+        <p>Le site se dote également d'une politique d'utilisation et de confidentialité,
+        à lire en <a href="/confidentialite">cliquant ici</a>. Elle explique qui l'édite,
+        ce qu'il enregistre, ce qu'il va chercher ailleurs et comment il a été écrit —
+        histoire que rien ne se passe dans votre dos.</p>`
     },
     {
       version: '1.4',
@@ -111,50 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
         Elle se découvre simplement en faisant défiler.</p>
       <p>Certains contenus sont déjà accessibles, d'autres arriveront progressivement.
         L'idée est simple : offrir un point d'entrée clair pour explorer, comprendre et suivre l'évolution du projet.</p>
-    `,
-    letter: `
-      <div class="letter-panel">
-        <div class="letter-panel-from">Un message de Brad Bitt</div>
-        <div class="letter-body">
-          <p class="letter-salutation">Cher Bradbittien, chère Brad Bittienne,</p>
-
-          <p>Il y a quelques mois, je vous annonçais que le développement du jeu Brad Bitt était
-            suspendu pour une durée indéterminée. Cette phrase n'a plus lieu d'être.</p>
-
-          <p class="letter-strong">Le jeu n'est pas suspendu, et il n'est plus attendu « courant 2027 » :
-            la bêta ouvre du 27 au 29 novembre 2026, et la sortie officielle est fixée
-            au 9 janvier 2027.</p>
-
-          <p>Ce n'est pas un renoncement, c'est un calendrier. Entre les études, les projets personnels
-            et les idées qui occupent mon quotidien, je ne peux pas avancer au rythme d'un studio.
-            Alors plutôt que de promettre une date que je ne tiendrai pas, j'ai pris le temps qu'il fallait —
-            et maintenant que le travail a suffisamment avancé, je peux enfin écrire ces deux dates
-            noir sur blanc.</p>
-
-          <p>Et pendant ce temps, ça avance. La bande-son est écrite. L'univers est dessiné :
-            Brad, les Serra, les uniformes. L'histoire et le concept général sont posés.
-            Un prototype se joue déjà — un vrai niveau d'introduction, avec son menu, sa musique,
-            sa sauvegarde et ses ennemis.</p>
-
-          <p>Ce qui prend du temps, c'est le reste : la programmation, la construction des dix niveaux,
-            le hub, la boutique, les mini-jeux. C'est le travail invisible qui se cache derrière un jeu vidéo,
-            et c'est celui qui demande le plus de patience — la vôtre comme la mienne.</p>
-
-          <p>J'en profite pour vous dire un immense merci. Vous n'êtes peut-être pas des milliers,
-            mais chacun d'entre vous compte énormément. Chaque visite sur le site, chaque message,
-            chaque encouragement me donne la motivation de continuer.</p>
-
-          <p>Sans votre soutien, Brad Bitt ne serait probablement qu'une simple idée griffonnée
-            dans un coin de carnet. Aujourd'hui, grâce à vous, cet univers continue d'exister et de grandir.</p>
-
-          <p>Alors, au nom de toute l'équipe d'IMAGINe Studio… et de Brad Bitt
-            (qui représente à peu près la même personne, let's be honest), merci pour votre patience,
-            votre fidélité et votre soutien.</p>
-
-          <p class="letter-closing">The adventure isn't over.<br>See you on January 9th.</p>
-          <p class="letter-sig">— BB</p>
-        </div>
-      </div>
     `
   };
 
@@ -230,11 +186,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.style.overflow = 'hidden';
     overlayInner.focus();
 
+    // innerHTML est synchrone : les noeuds existent deja, inutile d'attendre
+    // une image pour brancher les ecouteurs.
     if (key === 'news') {
       markNewsRead();
-      requestAnimationFrame(attachNewsHandlers);
+      attachNewsHandlers();
     } else {
-      requestAnimationFrame(attacherAncres);
+      attacherAncres();
     }
   }
 
@@ -254,9 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   if (ovalLearn) ovalLearn.addEventListener('click', () => openPanel('welcome'));
-
-  const readLetterBtn = $('#btn-read-letter');
-  if (readLetterBtn) readLetterBtn.addEventListener('click', () => openPanel('letter'));
 
   if (newsBtn) newsBtn.addEventListener('click', () => { markNewsRead(); openPanel('news'); });
   if (newsBadge) newsBadge.addEventListener('click', e => {

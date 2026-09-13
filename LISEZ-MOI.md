@@ -1,62 +1,64 @@
-# Site Brad Bitt — version 1.5.1
-
-Mise à jour axée sur la clarification des dates du jeu et sur la transparence
-du site lui-même.
+# Site Brad Bitt — version 1.4.1
 
 ## Ce qu'il faut mettre en ligne
 
-**Six fichiers, tous des remplacements.** Aucune image à ajouter cette fois.
+**Cinq remplacements et un fichier nouveau**, tous à la racine. Aucune image à
+ajouter, `jeu.js` est inchangé.
 
 ```
-index.html      remplace
-jeu.html        remplace
-style.css       remplace
-jeu.css         remplace
-script.js       remplace
-jeu.js          inchangé — ne le copie que si tu préfères tout remplacer d'un bloc
+index.html            remplace
+jeu.html              remplace
+style.css             remplace
+jeu.css               remplace
+script.js             remplace
+confidentialite.html  NOUVEAU
 ```
 
-Ne touche pas au dossier `images/` : rien n'y a changé.
+La page est servie à l'adresse `/confidentialite`, comme `/jeu` l'est
+aujourd'hui : Netlify résout les URL propres, c'est vérifié.
 
 ## Les dates
 
 Le « courant 2027 » est remplacé partout par deux dates fermes :
 
-* **Bêta : 27 → 29 novembre 2026**
+* **Bêta : 27 → 29 novembre 2026**, avec les trois premiers niveaux
 * **Sortie officielle : 9 janvier 2027**
-
-Elles apparaissent désormais dans la bannière d'accueil (deux cartes dédiées),
-dans les chiffres de la carte « Le jeu », dans la lettre de Brad Bitt, dans la
-description de la page de présentation, sur sa pastille d'en-tête, sous son
-titre, dans la feuille de route — où la bêta devient une étape à part entière —
-et sur son écran de fin.
 
 ## La politique de confidentialité
 
-Nouvelle section en bas de la page d'accueil, à l'ancre `#confidentialite`,
-accessible depuis le pied de page des deux pages. Elle s'ouvre sur un encadré
-« En résumé », puis huit blocs dépliables :
+Elle n'est plus une section de la page d'accueil mais **une page à part
+entière**, avec l'en-tête et le pied de page du site et un lien « Retour au
+site ». On y accède de deux façons, et pas une de plus :
 
-1. Qui édite ce site — projet indépendant, les deux studios, H.D.N, le contact
-2. Hébergement — Netlify, ce que ça implique
-3. Journaux de connexion et adresses IP — ce que j'en fais, ce que je n'en fais pas
-4. Ce que le site enregistre dans votre navigateur
-5. Ce que le site charge ailleurs
-6. Comment ce site a été écrit
-7. Vos droits
-8. Contenus et propriété
+* le bouton **Confidentialité** du pied de page, sur les trois pages ;
+* le lien **« cliquant ici »** dans l'entrée v1.4.1 des nouveautés.
 
-L'entrée « v1.5.1 » des nouveautés contient le lien « cliquant ici » : il ferme
-la fenêtre, déplie le premier bloc et fait défiler jusqu'à la section.
+## La lettre
 
-## Deux points à vérifier de ton côté
+Le bouton « Lire la lettre » et tout son contenu ont été retirés — du HTML, du
+script et de la feuille de style. La bannière d'accueil ne propose plus que
+« Voir la présentation ». Rien n'en est dit dans le journal des mises à jour,
+comme demandé.
 
-* **Les journaux.** Le texte dit que tu peux accéder aux journaux de connexion
-  contenant les adresses IP. Selon ton offre Netlify, l'accès réellement
-  disponible peut être plus limité (statistiques agrégées plutôt que journaux
-  bruts). Le texte reste exact dans les deux cas, mais vérifie ce que ton
-  tableau de bord expose vraiment.
-* **Les bonus permanents.** Rien à voir avec cette version, mais la page du jeu
-  parle toujours du **prototype 06** et pointe vers `velvety-elf-21fb07`. Le jeu
-  a beaucoup avancé depuis : il faudra mettre à jour la présentation quand tu
-  voudras.
+## La feuille de route
+
+« Les niveaux » et « Le hub et tout autour » passent en **Fait**. Une nouvelle
+étape **En cours — Les tests** prend le relais : optimiser, corriger les bugs,
+ajouter du contenu supplémentaire. Le chapeau de la section le dit aussi en
+clair, et l'étape bêta précise qu'elle ouvre les trois premiers niveaux.
+
+## Un correctif au passage
+
+Les écouteurs de la fenêtre des nouveautés étaient branchés dans un
+`requestAnimationFrame`. Quand le navigateur met l'image en pause — onglet en
+arrière-plan, économie d'énergie — les cartes restaient inertes : impossible de
+les déplier. Ils sont maintenant branchés immédiatement, le HTML étant déjà en
+place à ce moment-là.
+
+## Deux points en suspens
+
+* **Les journaux.** Le texte dit que tu peux accéder aux journaux contenant les
+  adresses IP. Vérifie ce que ton offre Netlify expose réellement.
+* **Le prototype.** La page du jeu parle toujours du **prototype 06** et pointe
+  vers `velvety-elf-21fb07`, alors que la feuille de route annonce désormais que
+  tout est fait. C'est le prochain décalage à rattraper.
