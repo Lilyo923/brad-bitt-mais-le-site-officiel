@@ -138,6 +138,19 @@ p{margin:0}
   background:color-mix(in srgb,var(--teal) 10%,transparent);
   padding:6px 12px;border-radius:999px;white-space:nowrap;
 }
+/* La pastille renvoie à la rubrique bêta de l'accueil, qui connaît l'état. */
+.bar-pill-lien{
+  text-decoration:none;
+  color:var(--pink);
+  border-color:color-mix(in srgb,var(--pink) 36%,transparent);
+  background:color-mix(in srgb,var(--pink) 12%,transparent);
+  transition:background .2s ease,border-color .2s ease;
+}
+.bar-pill-lien:hover{
+  background:color-mix(in srgb,var(--pink) 22%,transparent);
+  border-color:var(--pink);
+}
+.beta-sep{opacity:.5}
 
 /* ------------------------- 3. BOUTONS ---------------------------------- */
 .btn{

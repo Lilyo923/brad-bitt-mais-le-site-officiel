@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const THEME_KEY = 'brad_theme_pref';
 
   // ← Incrémente cette valeur à chaque nouvelle MàJ pour réafficher le badge
-  const NEWS_VERSION  = '1.4.1';
+  const NEWS_VERSION  = '1.5';
   const NEWS_SEEN_KEY = 'brad_news_seen_v';
 
   const moinsDAnimation = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -48,6 +48,19 @@ document.addEventListener('DOMContentLoaded', () => {
      Historique des versions
      ------------------------------------------------------------------- */
   const NEWS_HISTORY = [
+    {
+      version: '1.5',
+      date: '16-11-2026',
+      teaser: 'La bêta arrive : une rubrique dédiée sur l\'accueil, avec un décompte en direct et le skin exclusif à décrocher.',
+      detailHtml: `<p>Du <strong>27 au 29 novembre 2026</strong>, les trois premiers niveaux de
+        « Brad Bitt, mais le jeu » s'ouvrent à tout le monde. Les terminer pendant ces trois jours
+        débloque un <strong>skin exclusif</strong>, qui reste ensuite dans la sauvegarde —
+        et qui ne s'obtiendra plus après.</p>
+        <p>L'accueil s'ouvre désormais sur une rubrique dédiée : le décompte jusqu'à l'ouverture,
+        puis le temps qu'il reste une fois la bêta lancée, puis le décompte vers la sortie
+        du 9 janvier. Elle bascule toute seule à l'heure du serveur — avancer l'horloge de son
+        ordinateur n'ouvre rien du tout.</p>`
+    },
     {
       version: '1.4.1',
       date: '13-09-2026',
@@ -390,5 +403,196 @@ document.addEventListener('DOMContentLoaded', () => {
     const maj = () => header.classList.toggle('is-stuck', window.scrollY > 8);
     maj();
     addEventListener('scroll', maj, { passive: true });
+  })();
+  /* ----------------------------------------------------------------------
+     LA BÊTA : décompte et bascule automatique des trois états
+
+     La rubrique est publiée une fois et se débrouille seule : elle compte
+     jusqu'au 27 novembre, puis affiche le temps restant jusqu'au 29, puis
+     bascule sur la sortie du 9 janvier. Aucun redéploiement en cours de route.
+
+     L'HEURE N'EST PAS CELLE DE L'APPAREIL. Avancer l'horloge de son
+     ordinateur est la première chose qu'on essaie : la page demande donc
+     l'heure au serveur qui l'héberge — l'en-tête `Date` de sa propre réponse,
+     aucun service extérieur — puis compte localement à partir de là. C'est le
+     procédé qu'utilise déjà le jeu (js/compte.js).
+     ------------------------------------------------------------------- */
+  (function beta() {
+    const section = $('#beta');
+    if (!section) return;
+
+    const ouverture = Date.parse(section.dataset.ouverture);
+    const fermeture = Date.parse(section.dataset.fermeture);
+    const sortie    = Date.parse(section.dataset.sortie);
+    if (!isFinite(ouverture) || !isFinite(fermeture) || !isFinite(sortie)) return;
+
+    const compte = $('#beta-compte');
+    const mot    = $('#beta-mot');
+
+    /* --- l'horloge ----------------------------------------------------- */
+    let decalage = 0;                    // serveur − appareil, en millisecondes
+    const maintenant = () => Date.now() + decalage;
+
+    function synchroniser() {
+      const p0 = performance.now();
+      // Le paramètre casse le cache sans changer la page demandée.
+      fetch(location.pathname + '?h=' + Date.now(), { method: 'HEAD', cache: 'no-store' })
+        .then(r => {
+          const d = Date.parse(r.headers.get('Date') || '');
+          if (!isFinite(d)) return;
+          // L'en-tête est arrondi à la seconde : on vise le milieu, et on
+          // rattrape la moitié de l'aller-retour.
+          decalage = (d + 500 + (performance.now() - p0) / 2) - Date.now();
+          rendre();
+        })
+        .catch(() => { /* hors ligne : on garde l'horloge de l'appareil */ });
+    }
+
+    /* --- les trois états ------------------------------------------------ */
+    function etatA(t) {
+      if (t < ouverture) return 'avant';
+      if (t < fermeture) return 'ouverte';
+      return 'terminee';
+    }
+
+    const UNITES = [
+      ['j', 86400, 'JOURS',    'JOUR'],
+      ['h',  3600, 'HEURES',   'HEURE'],
+      ['m',    60, 'MINUTES',  'MINUTE'],
+      ['s',     1, 'SECONDES', 'SECONDE'],
+    ];
+
+    /* Ce que dit le BRADDY3000 en attendant — les répliques du jeu, pour que
+       ce soit la même voix des deux côtés. Elles tournent toutes les 9 s. */
+    const REPLIQUES = [
+      [14 * 86400, ['Je compte les secondes. Toutes. Je n\'ai que ça à faire.',
+                    'Brad dort. Moi je surveille le compteur. Chacun son talent.',
+                    'La base est presque montée. Il manque une vis. Je sais laquelle.']],
+      [2 * 86400,  ['Plus que quelques jours. J\'ai dépoussiéré la borne d\'arcade.',
+                    'Les Serra répètent. Je les entends d\'ici. C\'est inquiétant.',
+                    'J\'ai compté les Brad Coins. Deux fois. Il en manque toujours un.']],
+      [86400,      ['Demain. J\'ai vérifié trois fois : c\'est demain.',
+                    'Dors. Moi je ne dors pas, je suis un robot. C\'est pratique.']],
+      [3600,       ['Quelques heures. Ne reste pas debout, tu vas rayer le sol.',
+                    'Je chauffe les enceintes. Elles n\'aiment pas démarrer à froid.']],
+      [60,         ['Moins d\'une heure. Ne touche à rien.',
+                    'Ça y est presque. J\'ai dit : ne touche à rien.']],
+      [0,          ['Zéro. Vas-y.']],
+    ];
+    const PENDANT = [
+      'C\'est ouvert. Qu\'est-ce que tu attends ?',
+      'Trois niveaux. Un skin. Un dimanche soir. Fais le calcul.',
+      'Je note tout ce que tu fais. Pour les statistiques. Uniquement.',
+    ];
+    const APRES = [
+      'C\'est fini. J\'ai éteint les enceintes.',
+      'Rendez-vous le 9 janvier. J\'aurai retrouvé la vis.',
+    ];
+
+    function replique(etat, reste) {
+      const tour = Math.floor(maintenant() / 9000);
+      if (etat === 'ouverte') return PENDANT[tour % PENDANT.length];
+      if (etat === 'terminee') return APRES[tour % APRES.length];
+      for (const [seuil, phrases] of REPLIQUES) {
+        if (reste > seuil) return phrases[tour % phrases.length];
+      }
+      return '';
+    }
+
+    /* --- l'affichage ---------------------------------------------------- */
+    let dernierEtat = null;
+
+    function rendre() {
+      const t = maintenant();
+      const etat = etatA(t);
+      const cible = etat === 'avant' ? ouverture : etat === 'ouverte' ? fermeture : sortie;
+      let reste = Math.max(0, Math.floor((cible - t) / 1000));
+
+      if (etat !== dernierEtat) {
+        section.dataset.etat = etat;
+        dernierEtat = etat;
+      }
+
+      let r = reste;
+      for (const [cle, pas, pluriel, singulier] of UNITES) {
+        const v = Math.floor(r / pas);
+        r -= v * pas;
+        const nombre = compte.querySelector('[data-unite="' + cle + '"]');
+        const nom    = compte.querySelector('[data-nom="' + cle + '"]');
+        if (nombre) nombre.textContent = cle === 'j' ? String(v) : String(v).padStart(2, '0');
+        if (nom)    nom.textContent = v === 1 ? singulier : pluriel;
+      }
+      // Une phrase complète pour qui n'a que la synthèse vocale.
+      compte.setAttribute('aria-label', etat === 'ouverte'
+        ? 'Temps restant avant la fermeture de la bêta'
+        : etat === 'avant' ? 'Temps restant avant l\'ouverture de la bêta'
+        : 'Temps restant avant la sortie du jeu');
+
+      if (mot) {
+        const phrase = replique(etat, reste);
+        if (phrase && mot.textContent !== phrase) mot.textContent = phrase;
+      }
+    }
+
+    rendre();
+    synchroniser();
+    setInterval(rendre, 1000);
+    // De retour sur l'onglet après une longue pause, on revérifie l'heure :
+    // les minuteurs d'arrière-plan dérivent, et la bascule peut avoir eu lieu.
+    addEventListener('visibilitychange', () => { if (!document.hidden) synchroniser(); });
+
+    /* --- « Ajouter à mon agenda » --------------------------------------- */
+    const agenda = $('#beta-agenda');
+    if (agenda) {
+      /* iCalendar veut des lignes de 75 octets au plus, les suivantes
+         commençant par une espace. On compte en octets, pas en caractères :
+         « à » en pèse deux. */
+      const plier = ligne => {
+        const octets = new TextEncoder().encode(ligne);
+        if (octets.length <= 74) return ligne;
+        const morceaux = [];
+        let courant = '';
+        for (const c of ligne) {
+          const essai = courant + c;
+          const max = morceaux.length ? 73 : 74;      // la suite perd une place pour l'espace
+          if (new TextEncoder().encode(essai).length > max) { morceaux.push(courant); courant = c; }
+          else courant = essai;
+        }
+        morceaux.push(courant);
+        return morceaux.join('\r\n ');
+      };
+
+      agenda.addEventListener('click', () => {
+        const horo = ms => new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+        const ics = [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'PRODID:-//IMAGINe Studio//Brad Bitt//FR',
+          'BEGIN:VEVENT',
+          'UID:beta-brad-bitt-2026@bbittmaislesite.netlify.app',
+          'DTSTAMP:' + horo(Date.now()),
+          'DTSTART:' + horo(ouverture),
+          'DTEND:' + horo(fermeture),
+          'SUMMARY:Bêta de Brad Bitt, mais le jeu',
+          'DESCRIPTION:Trois jours, les trois premiers niveaux, et un skin exclusif'
+            + ' à décrocher en les terminant.\\nhttps://bbittmaislejeu.netlify.app',
+          'URL:https://bbittmaislejeu.netlify.app',
+          'END:VEVENT',
+          'END:VCALENDAR',
+        ].map(plier).join('\r\n');
+
+        const lien = document.createElement('a');
+        lien.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+        lien.download = 'beta-brad-bitt.ics';
+        document.body.appendChild(lien);
+        lien.click();
+        document.body.removeChild(lien);
+        setTimeout(() => URL.revokeObjectURL(lien.href), 1000);
+
+        const avant = agenda.textContent;
+        agenda.textContent = 'Fichier téléchargé';
+        setTimeout(() => { agenda.textContent = avant; }, 2600);
+      });
+    }
   })();
 });

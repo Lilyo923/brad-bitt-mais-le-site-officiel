@@ -30,6 +30,7 @@
       </a>
 
       <nav class="mini-nav" aria-label="Navigation principale">
+        <a class="nav-link nav-beta" href="#beta"><span class="nav-point" aria-hidden="true"></span>Bêta</a>
         <a class='nav-link' href='/jeu'>Le&nbsp;jeu</a>
         <a class="nav-link" href="#episodes">Épisodes</a>
         <a class="nav-link" href="#music">Musiques</a>
@@ -88,32 +89,96 @@
       </div>
     </section>
 
-    <!-- ===================== ANNONCE — LES DATES ====================== -->
-    <section class="announce" id="annonce" aria-labelledby="annonce-title">
-      <div class="container announce-inner reveal">
-        <p class="pill">Un message de Brad Bitt</p>
-        <h2 id="annonce-title">Le jeu a enfin<br><span class="grad">ses dates</span>.</h2>
-        <p class="announce-lead">Fini le « courant 2027 ». Une bêta ouverte fin novembre,
-          la sortie officielle début janvier — deux dates posées, et de quoi s'y tenir.</p>
+    <!-- ========================== LA BÊTA ============================= -->
+    <!-- Les trois états (avant / ouverte / terminée) sont tous dans la page.
+         C'est `data-etat` qui décide de ce qui s'affiche, et le script le pose
+         à partir de l'heure du SERVEUR : la rubrique bascule toute seule le
+         27 au soir, puis le 29, sans rien redéployer. -->
+    <section class="beta" id="beta" data-etat="avant"
+             data-ouverture="2026-11-27T19:00:00Z"
+             data-fermeture="2026-11-29T23:00:00Z"
+             data-sortie="2027-01-09T00:00:00Z"
+             aria-labelledby="beta-titre">
+      <div class="beta-lueur" aria-hidden="true"></div>
 
-        <div class="dates">
-          <div class="date-card">
-            <span class="date-kind">Bêta</span>
-            <strong class="date-val">27 <span aria-hidden="true">→</span><span class="sr-only">au</span> 29 novembre</strong>
-            <span class="date-year">2026</span>
-            <span class="date-note">Les trois premiers niveaux</span>
-          </div>
-          <div class="date-card is-final">
-            <span class="date-kind">Sortie officielle</span>
-            <strong class="date-val">9 janvier</strong>
-            <span class="date-year">2027</span>
-            <span class="date-note">Le jeu complet</span>
+      <div class="container beta-inner reveal">
+        <p class="beta-drapeau">
+          <span class="beta-pastille" aria-hidden="true"></span>
+          <span data-etat-avant>Bêta ouverte à tous <span class="beta-sep">·</span> durée limitée</span>
+          <span data-etat-ouverte>C'est ouvert <span class="beta-sep">·</span> jusqu'au 29 novembre</span>
+          <span data-etat-terminee>La bêta est terminée</span>
+        </p>
+
+        <h2 id="beta-titre">
+          <span data-etat-avant>La bêta <span class="grad">arrive</span>.</span>
+          <span data-etat-ouverte>La bêta est <span class="grad">ouverte</span>.</span>
+          <span data-etat-terminee>Rendez-vous le <span class="grad">9 janvier</span>.</span>
+        </h2>
+
+        <p class="beta-lead">
+          <span data-etat-avant>Trois jours, les trois premiers niveaux, et un skin
+            que personne ne pourra plus obtenir ensuite.</span>
+          <span data-etat-ouverte>Trois jours, les trois premiers niveaux, et un skin
+            à décrocher avant dimanche soir.</span>
+          <span data-etat-terminee>Merci à celles et ceux qui ont joué. Le jeu complet
+            sort le 9 janvier 2027.</span>
+        </p>
+
+        <!-- Le décompte. role="timer" sans aria-live : une annonce par seconde
+             rendrait la page inutilisable au lecteur d'écran. La date écrite
+             juste en dessous reste, elle, parfaitement lisible. -->
+        <p class="beta-compte-quoi">
+          <span data-etat-avant>Ouverture dans</span>
+          <span data-etat-ouverte>Il reste</span>
+          <span data-etat-terminee>Sortie dans</span>
+        </p>
+
+        <div class="beta-compte" id="beta-compte" role="timer" aria-live="off">
+          <div class="bloc"><strong data-unite="j">—</strong><span data-nom="j">JOURS</span></div>
+          <div class="bloc"><strong data-unite="h">—</strong><span data-nom="h">HEURES</span></div>
+          <div class="bloc"><strong data-unite="m">—</strong><span data-nom="m">MINUTES</span></div>
+          <div class="bloc"><strong data-unite="s">—</strong><span data-nom="s">SECONDES</span></div>
+        </div>
+
+        <p class="beta-quand">
+          <span data-etat-avant>Ouverture le 27 novembre 2026 à 20 h <span class="beta-sep">·</span> heure de Paris</span>
+          <span data-etat-ouverte>Fermeture le 29 novembre 2026 à minuit <span class="beta-sep">·</span> heure de Paris</span>
+          <span data-etat-terminee>Sortie officielle le 9 janvier 2027</span>
+        </p>
+
+        <div class="beta-actions">
+          <a class="btn btn-primary btn-lg" href="https://bbittmaislejeu.netlify.app"
+             target="_blank" rel="noopener noreferrer">
+            <span data-etat-avant>Ouvrir le jeu <span class="ext" aria-hidden="true">↗</span></span>
+            <span data-etat-ouverte>Jouer maintenant <span class="ext" aria-hidden="true">↗</span></span>
+            <span data-etat-terminee>Revoir le jeu <span class="ext" aria-hidden="true">↗</span></span>
+          </a>
+          <button class="btn btn-ghost btn-lg" id="beta-agenda" type="button">Ajouter à mon agenda</button>
+          <a class="btn btn-quiet btn-lg" href="/jeu">Voir la présentation</a>
+        </div>
+
+        <!-- La récompense : c'est elle qui fait venir, autant la montrer. -->
+        <div class="beta-prix">
+          <div class="beta-skin" aria-hidden="true"></div>
+          <div class="beta-prix-texte">
+            <p class="beta-prix-titre">Le skin « bêta-testeur »</p>
+            <p>Termine les trois premiers niveaux pendant ces trois jours et il est à toi,
+              gardé dans ta sauvegarde pour la version finale. Après dimanche,
+              il ne se débloque plus.</p>
           </div>
         </div>
 
-        <div class="announce-actions">
-          <a class='btn btn-primary' href='/jeu'>Voir la présentation</a>
-        </div>
+        <ul class="beta-faits">
+          <li><strong>3</strong><span>Niveaux ouverts</span></li>
+          <li><strong>3</strong><span>Jours pour en profiter</span></li>
+          <li><strong>1</strong><span>Skin à décrocher</span></li>
+          <li><strong>0 €</strong><span>Et aucun compte à créer</span></li>
+        </ul>
+
+        <p class="beta-braddy">
+          <span class="beta-robot" aria-hidden="true"></span>
+          <span id="beta-mot">Je compte les secondes. Toutes. Je n'ai que ça à faire.</span>
+        </p>
       </div>
     </section>
 
@@ -240,12 +305,13 @@
         <span>IMAGINe Studio &amp; Engine HwR</span>
       </div>
       <nav class="footer-links" aria-label="Liens de pied de page">
+        <a href="#beta">Bêta</a>
         <a href='/jeu'>Le jeu</a>
         <a href="#episodes">Épisodes</a>
         <a href="https://bradbprog.netlify.app" target="_blank" rel="noopener noreferrer">Suivi du jeu</a>
         <a href='/confidentialite'>Confidentialité</a>
       </nav>
-      <div class="footer-version">Version 1.4.1</div>
+      <div class="footer-version">Version 1.5</div>
     </div>
   </footer>
 

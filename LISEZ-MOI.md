@@ -1,64 +1,69 @@
-# Site Brad Bitt — version 1.4.1
+# Site Brad Bitt — version 1.5 · la bêta
 
 ## Ce qu'il faut mettre en ligne
 
-**Cinq remplacements et un fichier nouveau**, tous à la racine. Aucune image à
-ajouter, `jeu.js` est inchangé.
+**Cinq remplacements et une image nouvelle.** `jeu.js` et `confidentialite.html`
+n'ont pas bougé.
 
 ```
-index.html            remplace
-jeu.html              remplace
-style.css             remplace
-jeu.css               remplace
-script.js             remplace
-confidentialite.html  NOUVEAU
+index.html                          remplace
+style.css                           remplace
+script.js                           remplace
+jeu.html                            remplace
+jeu.css                             remplace
+images/jeu/brad-beta-testeur.png    NOUVEAU  (à ajouter dans images/jeu/)
 ```
 
-La page est servie à l'adresse `/confidentialite`, comme `/jeu` l'est
-aujourd'hui : Netlify résout les URL propres, c'est vérifié.
+## La rubrique bêta
 
-## Les dates
+Elle s'ouvre juste sous le hero, à la place de l'ancienne bannière des dates —
+qu'elle remplace entièrement, puisqu'elle dit la même chose en mieux. Un lien
+**Bêta** apparaît aussi dans le menu et dans le pied de page, et la pastille
+d'en-tête de la page de présentation y renvoie.
 
-Le « courant 2027 » est remplacé partout par deux dates fermes :
+### Elle se débrouille seule
 
-* **Bêta : 27 → 29 novembre 2026**, avec les trois premiers niveaux
-* **Sortie officielle : 9 janvier 2027**
+Trois états sont écrits dans la page, et c'est l'heure qui décide lequel
+s'affiche. **Tu publies une fois, tu ne touches plus à rien :**
 
-## La politique de confidentialité
+| Quand | Ce qui s'affiche |
+|---|---|
+| Jusqu'au 27 nov. 20 h | « La bêta arrive » + décompte jusqu'à l'ouverture |
+| Du 27 au 29 nov. | « La bêta est ouverte » + temps restant + « Jouer maintenant » |
+| Après le 29 nov. | « Rendez-vous le 9 janvier » + décompte vers la sortie |
 
-Elle n'est plus une section de la page d'accueil mais **une page à part
-entière**, avec l'en-tête et le pied de page du site et un lien « Retour au
-site ». On y accède de deux façons, et pas une de plus :
+### L'heure est celle du serveur, pas celle du visiteur
 
-* le bouton **Confidentialité** du pied de page, sur les trois pages ;
-* le lien **« cliquant ici »** dans l'entrée v1.4.1 des nouveautés.
+Avancer l'horloge de son ordinateur est la première chose qu'on essaie. La page
+demande donc l'heure au serveur qui l'héberge — l'en-tête `Date` de sa propre
+réponse, aucun service extérieur — puis compte localement à partir de là. C'est
+exactement le procédé de `js/compte.js` dans le jeu, pour que les deux comptes
+à rebours restent d'accord entre eux.
 
-## La lettre
+### Ce qu'elle contient
 
-Le bouton « Lire la lettre » et tout son contenu ont été retirés — du HTML, du
-script et de la feuille de style. La bannière d'accueil ne propose plus que
-« Voir la présentation ». Rien n'en est dit dans le journal des mises à jour,
-comme demandé.
+* le décompte en jours / heures / minutes / secondes, mêmes libellés que le jeu ;
+* le **skin « bêta-testeur »** animé, repris de `assets/brad/brad-beta-testeur.png`
+  du jeu et agrandi ×4 ;
+* trois boutons : ouvrir le jeu, **ajouter à mon agenda** (un fichier `.ics`
+  fabriqué dans le navigateur, sans appel extérieur), voir la présentation ;
+* quatre chiffres : 3 niveaux, 3 jours, 1 skin, 0 € ;
+* une réplique du **BRADDY3000** qui tourne toutes les 9 secondes — ce sont
+  celles de `js/compte.js`, pour que ce soit la même voix des deux côtés.
 
-## La feuille de route
+## Au passage
 
-« Les niveaux » et « Le hub et tout autour » passent en **Fait**. Une nouvelle
-étape **En cours — Les tests** prend le relais : optimiser, corriger les bugs,
-ajouter du contenu supplémentaire. Le chapeau de la section le dit aussi en
-clair, et l'étape bêta précise qu'elle ouvre les trois premiers niveaux.
+La page de présentation pointait encore vers `velvety-elf-21fb07` — le
+prototype 06 d'août. Les **trois liens** mènent maintenant à
+`bbittmaislejeu.netlify.app`, et le libellé passe de « Jouer au prototype »
+à « Ouvrir le jeu ».
 
-## Un correctif au passage
+## Deux choses à vérifier
 
-Les écouteurs de la fenêtre des nouveautés étaient branchés dans un
-`requestAnimationFrame`. Quand le navigateur met l'image en pause — onglet en
-arrière-plan, économie d'énergie — les cartes restaient inertes : impossible de
-les déplier. Ils sont maintenant branchés immédiatement, le HTML étant déjà en
-place à ce moment-là.
-
-## Deux points en suspens
-
-* **Les journaux.** Le texte dit que tu peux accéder aux journaux contenant les
-  adresses IP. Vérifie ce que ton offre Netlify expose réellement.
-* **Le prototype.** La page du jeu parle toujours du **prototype 06** et pointe
-  vers `velvety-elf-21fb07`, alors que la feuille de route annonce désormais que
-  tout est fait. C'est le prochain décalage à rattraper.
+* **L'heure de fermeture est une hypothèse.** `edition.js` fixe l'ouverture au
+  27 à 20 h, mais ne dit rien de la fin. J'ai retenu le **29 novembre à minuit**
+  (heure de Paris). Si la bêta ferme à une autre heure, c'est `data-fermeture`
+  dans `index.html` qu'il faut changer — une seule ligne, en UTC.
+* **La page de présentation parle toujours du prototype 06** et décrit le seul
+  niveau d'introduction, alors que le jeu a dix niveaux, un hub et des boss.
+  Les liens sont rattrapés, pas le texte : c'est le chantier suivant.
