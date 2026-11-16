@@ -52,14 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       version: '1.5',
       date: '16-11-2026',
       teaser: 'La bêta arrive : une rubrique dédiée sur l\'accueil, avec un décompte en direct et le skin exclusif à décrocher.',
-      detailHtml: `<p>Du <strong>27 au 29 novembre 2026</strong>, les trois premiers niveaux de
-        « Brad Bitt, mais le jeu » s'ouvrent à tout le monde. Les terminer pendant ces trois jours
-        débloque un <strong>skin exclusif</strong>, qui reste ensuite dans la sauvegarde —
-        et qui ne s'obtiendra plus après.</p>
-        <p>L'accueil s'ouvre désormais sur une rubrique dédiée : le décompte jusqu'à l'ouverture,
-        puis le temps qu'il reste une fois la bêta lancée, puis le décompte vers la sortie
-        du 9 janvier. Elle bascule toute seule à l'heure du serveur — avancer l'horloge de son
-        ordinateur n'ouvre rien du tout.</p>`
+      detailHtml: `<p>Cette mise à jour comprend une refonte exclusive du site, spécialement déployée pour accompagner la phase bêta du jeu Brad Bitt.</p>`
     },
     {
       version: '1.4.1',
