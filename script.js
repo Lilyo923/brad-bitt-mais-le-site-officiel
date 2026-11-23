@@ -52,12 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       version: '1.6',
       date: '23-11-2026',
       teaser: 'La bande-son de la b\u00eata est en ligne : sept titres \u00e0 \u00e9couter directement depuis le site, quatre jours avant l\'ouverture.',
-      detailHtml: `<p>La rubrique <strong>Musiques</strong> ne dit plus &laquo;&nbsp;prochainement&nbsp;&raquo;.
-        Elle accueille <strong>&laquo;&nbsp;Brad Bitt, mais le jeu &mdash; B&Ecirc;TA OST&nbsp;&raquo;</strong>, sept titres et
-        dix-huit minutes : le menu, l'intro, la base, les trois niveaux de la b&ecirc;ta et le mini-boss.</p>
-        <p>Un clic sur la pochette ouvre l'album et lance la lecture sans quitter la page.
-        Le lecteur n'est charg&eacute; qu'&agrave; ce moment-l&agrave; : tant que vous ne cliquez pas,
-        rien n'est demand&eacute; &agrave; SoundCloud.</p>`
+      detailHtml: `<p>À partir de maintenant, il est possible d'accéder à la section musique via la rubrique dédiée.</p>`
     },
     {
       version: '1.5',
