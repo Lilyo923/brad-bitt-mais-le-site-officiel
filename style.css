@@ -674,6 +674,167 @@ p{margin:0}
   .ep-card-inner{transition:none}
 }
 
+/* ------------------------ 11 bis. LA BANDE-SON -------------------------- */
+.ost-bloc{
+  display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);
+  gap:clamp(24px,4vw,48px);align-items:start;
+}
+
+/* La pochette EST le bouton : pas de cadre, pas de libellé, on clique dessus. */
+.ost-pochette{
+  position:relative;display:block;padding:0;border:0;background:none;cursor:pointer;
+  border-radius:var(--radius);overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;
+}
+.ost-pochette img{width:100%;display:block}
+.ost-pochette:hover{transform:translateY(-6px) scale(1.012)}
+.ost-pochette::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 45%,rgba(10,6,20,.5));
+  opacity:0;transition:opacity .35s ease;
+}
+.ost-pochette:hover::after{opacity:1}
+.ost-lecture{
+  position:absolute;left:50%;top:50%;translate:-50% -50%;
+  width:70px;height:70px;border-radius:999px;display:grid;place-items:center;
+  background:rgba(255,255,255,.92);color:#12121a;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  opacity:0;scale:.82;transition:opacity .3s ease,scale .3s cubic-bezier(.2,.9,.3,1.3);
+}
+.ost-pochette:hover .ost-lecture,
+.ost-pochette:focus-visible .ost-lecture{opacity:1;scale:1}
+
+.ost-infos{display:flex;flex-direction:column;gap:16px}
+.ost-meta{
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;
+  font-size:13px;color:var(--muted);font-weight:600;
+}
+.ost-etiquette{
+  font-family:Silkscreen,ui-monospace,monospace;font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--teal);
+  background:color-mix(in srgb,var(--teal) 12%,transparent);
+  border:1px solid color-mix(in srgb,var(--teal) 30%,transparent);
+  border-radius:999px;padding:5px 11px;
+}
+.ost-slogan{margin:0;font-size:clamp(17px,2vw,21px);line-height:1.5;color:var(--text);max-width:46ch}
+.ost-slogan em{font-style:italic;color:var(--teal)}
+
+/* Les titres, avec la ligne de pointillés qui mène à la durée. */
+.ost-titres{list-style:none;counter-reset:piste;margin:6px 0 0;padding:0;display:flex;flex-direction:column}
+.ost-titres li{
+  counter-increment:piste;
+  display:flex;align-items:baseline;gap:12px;
+  padding:11px 0;border-bottom:1px solid var(--line);
+}
+.ost-titres li:first-child{border-top:1px solid var(--line)}
+.ost-titres li::before{
+  content:counter(piste,decimal-leading-zero);
+  font-family:Silkscreen,ui-monospace,monospace;font-size:10px;color:var(--muted);
+  flex:0 0 auto;min-width:20px;
+}
+.t-nom{font-size:15.5px;font-weight:600;overflow-wrap:anywhere}
+.t-duree{
+  margin-left:auto;font-size:13.5px;color:var(--muted);
+  font-variant-numeric:tabular-nums;flex:0 0 auto;
+}
+.ost-titres li::after{
+  content:"";order:1;flex:1 1 auto;min-width:18px;align-self:center;
+  border-bottom:1px dotted var(--line-strong);
+}
+.ost-titres .t-duree{order:2}
+
+.ost-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.ost-note{margin:0;font-size:13px;color:var(--muted)}
+
+.section-solo .card{max-width:620px}
+
+/* Le rappel glissé dans la rubrique bêta. */
+.ost-rappel{
+  display:inline-flex;align-items:center;gap:9px;margin:6px 0 0;
+  font-size:14.5px;color:#c8c2e8;
+}
+.ost-note-ico{
+  display:grid;place-items:center;width:26px;height:26px;border-radius:999px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);color:#fff;
+}
+.ost-rappel a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
+.ost-rappel a:hover{border-bottom-color:#fff}
+
+/* ------------------- 11 ter. LE DISQUE DANS LA MODALE ------------------- */
+/* Chaque partie entre à son tour : pochette, texte, lecteur, titres. */
+@keyframes disqueEntree{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:none}
+}
+@keyframes disquePochette{
+  from{opacity:0;transform:scale(.86) rotate(-4deg)}
+  to{opacity:1;transform:none}
+}
+@keyframes disqueHalo{
+  from{opacity:0;transform:scale(.7)}
+  to{opacity:.55;transform:scale(1)}
+}
+
+.disque{display:flex;flex-direction:column;gap:20px}
+.disque-haut{display:flex;align-items:center;gap:clamp(16px,3vw,28px)}
+
+.disque-pochette{
+  position:relative;flex:0 0 auto;width:clamp(120px,26vw,172px);
+  border-radius:var(--radius-sm);overflow:visible;
+  animation:disquePochette .72s cubic-bezier(.2,.9,.25,1.05) both;
+}
+.disque-pochette img{width:100%;display:block;border-radius:var(--radius-sm);box-shadow:var(--shadow);position:relative;z-index:1}
+.disque-pochette::before{
+  content:"";position:absolute;inset:-16%;border-radius:50%;z-index:0;
+  background:radial-gradient(circle,rgba(245,48,152,.55),transparent 68%);
+  filter:blur(22px);
+  animation:disqueHalo 1.1s ease-out .15s both;
+}
+
+.disque-texte{min-width:0;animation:disqueEntree .6s cubic-bezier(.2,.8,.2,1) .18s both}
+.disque-etiquette{
+  font-family:Silkscreen,ui-monospace,monospace;font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--teal);margin:0 0 10px;
+}
+.disque-texte h2{font-size:clamp(20px,3vw,28px);margin:0 0 10px;line-height:1.15}
+.disque-slogan{margin:0;color:var(--muted);font-size:15px;line-height:1.6}
+.disque-slogan em{font-style:italic;color:var(--text)}
+
+/* Le lecteur SoundCloud est blanc et ne se teinte pas : plutot que de le
+   subir, on l'encadre franchement, comme une platine posee sur la page. */
+.disque-lecteur{
+  border-radius:var(--radius-sm);overflow:hidden;
+  background:#fff;padding:6px;
+  border:1px solid var(--line-strong);
+  box-shadow:var(--shadow-sm);
+  animation:disqueEntree .6s cubic-bezier(.2,.8,.2,1) .34s both;
+}
+.disque-lecteur iframe{display:block;width:100%;height:300px;border:0;border-radius:8px}
+
+.disque-titres{
+  list-style:none;counter-reset:piste;margin:0;padding:0;
+  animation:disqueEntree .6s cubic-bezier(.2,.8,.2,1) .46s both;
+}
+.disque-titres li{
+  counter-increment:piste;display:flex;align-items:baseline;gap:12px;
+  padding:9px 0;border-bottom:1px solid var(--line);font-size:14.5px;
+}
+.disque-titres li::before{
+  content:counter(piste,decimal-leading-zero);
+  font-family:Silkscreen,ui-monospace,monospace;font-size:9.5px;color:var(--muted);min-width:20px;
+}
+.disque-titres li:last-child{border-bottom:0}
+.disque-titres .t-duree{margin-left:auto;color:var(--muted);font-variant-numeric:tabular-nums}
+.disque-pied{margin:0;font-size:13px;color:var(--muted)}
+
+@media (prefers-reduced-motion:reduce){
+  .disque-pochette,.disque-pochette::before,.disque-texte,
+  .disque-lecteur,.disque-titres{animation:none}
+  .disque-pochette::before{opacity:.45}
+  .ost-pochette:hover{transform:none}
+}
+
 /* ------------------ 12 bis. CONFIDENTIALITÉ & MENTIONS ------------------ */
 .legal{border-top:1px solid var(--line);background:var(--bg-2)}
 
@@ -782,6 +943,11 @@ p{margin:0}
   .legal-item summary{padding:18px 20px}
   .legal-body{margin-inline:20px}
   .footer-inner{flex-direction:column;align-items:flex-start}
+  .ost-bloc{grid-template-columns:1fr;gap:24px}
+  .ost-pochette{max-width:320px}
+  .disque-haut{flex-direction:column;align-items:flex-start;text-align:left}
+  .disque-pochette{width:min(220px,62%)}
+  .disque-lecteur iframe{height:300px}
 }
 
 @media (max-width:480px){

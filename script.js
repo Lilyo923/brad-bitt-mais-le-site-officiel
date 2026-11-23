@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const THEME_KEY = 'brad_theme_pref';
 
   // ← Incrémente cette valeur à chaque nouvelle MàJ pour réafficher le badge
-  const NEWS_VERSION  = '1.5';
+  const NEWS_VERSION  = '1.6';
   const NEWS_SEEN_KEY = 'brad_news_seen_v';
 
   const moinsDAnimation = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -48,6 +48,17 @@ document.addEventListener('DOMContentLoaded', () => {
      Historique des versions
      ------------------------------------------------------------------- */
   const NEWS_HISTORY = [
+    {
+      version: '1.6',
+      date: '23-11-2026',
+      teaser: 'La bande-son de la b\u00eata est en ligne : sept titres \u00e0 \u00e9couter directement depuis le site, quatre jours avant l\'ouverture.',
+      detailHtml: `<p>La rubrique <strong>Musiques</strong> ne dit plus &laquo;&nbsp;prochainement&nbsp;&raquo;.
+        Elle accueille <strong>&laquo;&nbsp;Brad Bitt, mais le jeu &mdash; B&Ecirc;TA OST&nbsp;&raquo;</strong>, sept titres et
+        dix-huit minutes : le menu, l'intro, la base, les trois niveaux de la b&ecirc;ta et le mini-boss.</p>
+        <p>Un clic sur la pochette ouvre l'album et lance la lecture sans quitter la page.
+        Le lecteur n'est charg&eacute; qu'&agrave; ce moment-l&agrave; : tant que vous ne cliquez pas,
+        rien n'est demand&eacute; &agrave; SoundCloud.</p>`
+    },
     {
       version: '1.5',
       date: '16-11-2026',
@@ -107,7 +118,46 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ----------------------------------------------------------------------
      Contenu des panneaux
      ------------------------------------------------------------------- */
+  /* L'adresse du lecteur SoundCloud. Elle n'est demandee qu'au moment ou le
+     panneau s'ouvre : tant qu'on ne clique pas sur la pochette, le navigateur
+     ne contacte pas SoundCloud. */
+  const LECTEUR_OST =
+    'https://w.soundcloud.com/player/?url=' +
+    encodeURIComponent('https://api.soundcloud.com/playlists/2333967765') +
+    '&color=%23f53098&auto_play=true&hide_related=true&show_comments=false' +
+    '&show_user=true&show_reposts=false&show_teaser=false&visual=false';
+
+  const PISTES_OST = [
+    ['Menu principal', '3:52'], ['level_intro_theme', '2:23'], ['base', '2:15'],
+    ['level1', '2:31'], ['level2', '2:11'], ['level3', '2:39'], ['Mini-boss_3', '2:52'],
+  ];
+
   const PANELS = {
+    album: `
+      <div class="disque">
+        <div class="disque-haut">
+          <div class="disque-pochette">
+            <img src="images/ost/pochette-beta.png" alt="Pochette de l'album" width="800" height="800">
+          </div>
+          <div class="disque-texte">
+            <p class="disque-etiquette">Album &middot; 7 titres &middot; 18 min</p>
+            <h2>Brad Bitt, mais le jeu<br>B&Ecirc;TA &mdash; OST</h2>
+            <p class="disque-slogan">Laissez-vous emporter par les musiques de
+              <em>Brad Bitt, mais le jeu</em>&hellip; avant la b&ecirc;ta.</p>
+          </div>
+        </div>
+
+        <div class="disque-lecteur">
+          <iframe src="${LECTEUR_OST}" title="Lecteur SoundCloud &mdash; Brad Bitt, mais le jeu, b&ecirc;ta OST"
+                  allow="autoplay" loading="lazy"></iframe>
+        </div>
+
+
+        <p class="disque-pied">Album de <strong>l&#305;lY&ordm;</strong> pour IMAGINe Studio.
+          <a href="https://soundcloud.com/l-ly-39181851/sets/brad-bitt-mais-le-jeu-beta-ost"
+             target="_blank" rel="noopener noreferrer">Ouvrir dans SoundCloud &#8599;</a></p>
+      </div>
+    `,
     welcome: `
       <h2>En savoir plus</h2>
       <p>Ce site rassemble tout ce qui gravite autour de Brad Bitt : le jeu en préparation,
@@ -218,6 +268,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   if (ovalLearn) ovalLearn.addEventListener('click', () => openPanel('welcome'));
+
+  // La pochette et le bouton menent au meme endroit.
+  $$('#ost-ouvrir, #ost-ouvrir-2').forEach(b =>
+    b.addEventListener('click', () => openPanel('album')));
 
   if (newsBtn) newsBtn.addEventListener('click', () => { markNewsRead(); openPanel('news'); });
   if (newsBadge) newsBadge.addEventListener('click', e => {
